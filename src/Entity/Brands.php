@@ -4,6 +4,8 @@
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity
@@ -28,6 +30,16 @@ class Brands
      */
 
     private string $brand_name;
+
+    /** 
+     * @ORM\OneToMany(targetEntity=Products::class, mappedBy="brands")
+     */
+    private Collection $products;
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
 
     public function __toString()
     {
@@ -63,6 +75,17 @@ class Brands
     public function setBrandName(string $brand_name): Brands
     {
         $this->brand_name = $brand_name;
+        return $this;
+    }
+
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function setProducts(Collection $products): self
+    {
+        $this->products = $products;
         return $this;
     }
 }

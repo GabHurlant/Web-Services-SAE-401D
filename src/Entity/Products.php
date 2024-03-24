@@ -4,6 +4,8 @@
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Entity\Brands;
+use Entity\Categories;
 
 /**
  * @ORM\Entity
@@ -29,16 +31,18 @@ class Products
 
     private string $product_name;
 
-    /** @var int 
-     * @ORM\Column(type="integer")
+    /** 
+     * @ORM\ManyToOne(targetEntity=Brands::class, inversedBy="products", cascade={"persist"})
+     * @ORM\JoinColumn(name="brand_id", referencedColumnName="id")
      */
-    private int $brand_id;
+    private Brands $brand;
 
-    /** @var int 
-     * @ORM\Column(type="integer")
+
+    /** 
+     * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="products", cascade={"persist"})
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
-
-    private int $category_id;
+    private Categories $category;
 
     /** @var int
      * @ORM\Column(type="integer")
@@ -53,7 +57,7 @@ class Products
 
     public function __toString()
     {
-        return "Produit :{$this->product_id}, {$this->product_name}, {$this->brand_id}, {$this->category_id}, {$this->model_year}, {$this->list_price}";
+        return "Produit :{$this->product_id}, {$this->product_name}, {$this->brand}, {$this->category}, {$this->model_year}, {$this->list_price}";
     }
 
     //getters & setters
@@ -91,39 +95,44 @@ class Products
      * get brand_id
      * @return int
      */
-    public function getBrandId(): int
+    /**
+     * get brand
+     * @return Brands
+     */
+    public function getBrand(): Brands
     {
-        return $this->brand_id;
+        return $this->brand;
     }
 
     /**
-     * set brand_id
-     * @param int $brand_id
+     * set brand
+     * @param Brands $brand
      * @return Products
      */
-    public function setBrandId(int $brand_id): Products
+    public function setBrand(Brands $brand): self
     {
-        $this->brand_id = $brand_id;
+        $this->brand = $brand;
         return $this;
     }
 
+
     /**
-     * get category_id
-     * @return int
+     * get category
+     * @return Categories
      */
-    public function getCategoryId(): int
+    public function getCategory(): Categories
     {
-        return $this->category_id;
+        return $this->category;
     }
 
     /**
-     * set category_id
-     * @param int $category_id
+     * set category
+     * @param Categories $category
      * @return Products
      */
-    public function setCategoryId(int $category_id): Products
+    public function setCategory(Categories $category): self
     {
-        $this->category_id = $category_id;
+        $this->category = $category;
         return $this;
     }
 
