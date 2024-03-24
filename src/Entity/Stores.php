@@ -4,6 +4,8 @@
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 
 /**
  * @ORM\Entity
@@ -72,6 +74,22 @@ class Stores
      */
 
     private string $zip_code;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Stocks::class, mappedBy="store")
+     */
+    private Collection $stocks;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Employees::class, mappedBy="store")
+     */
+    private Collection $employees;
+
+    public function __construct()
+    {
+        $this->stocks = new ArrayCollection();
+        $this->employees = new ArrayCollection();
+    }
 
     public function __toString()
     {
@@ -237,6 +255,28 @@ class Stores
     public function setZipCode(string $zip_code): Stores
     {
         $this->zip_code = $zip_code;
+        return $this;
+    }
+
+    public function getStocks(): Collection
+    {
+        return $this->stocks;
+    }
+
+    public function setStock(Collection $stocks): self
+    {
+        $this->stocks = $stocks;
+        return $this;
+    }
+
+    public function getEmployees(): Collection
+    {
+        return $this->employees;
+    }
+
+    public function setEmployees(Collection $employees): self
+    {
+        $this->employees = $employees;
         return $this;
     }
 }

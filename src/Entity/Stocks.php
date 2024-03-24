@@ -23,27 +23,30 @@ class Stocks
 
     private int $stock_id;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Stores::class, inversedBy="stocks")
+     * @ORM\JoinColumn(name="store_id", referencedColumnName="store_id")
+     */
+    private $store;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Products::class, inversedBy="stocks")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="product_id")
+     */
+    private $product;
+
     /** @var int 
      * @ORM\Column(type="integer")
      */
 
-    private int $store_id;
-
-    /** @var int 
-     * @ORM\Column(type="integer")
-     */
-
-    private int $product_id;
-
-    /** @var int 
-     * @ORM\Column(type="integer")
-     */
 
     private int $quantity;
 
+
+
     public function __toString()
     {
-        return "Stock :{$this->stock_id}, {$this->store_id}, {$this->product_id}, {$this->quantity}";
+        return "Stock :{$this->stock_id}, {$this->store}, {$this->product}, {$this->quantity}";
     }
 
     //getters & setters
@@ -58,21 +61,22 @@ class Stocks
     }
 
     /**
-     * get store_id
-     * @return int
+     * get store
+     * @return Stores
      */
-    public function getStoreId(): int
+    public function getStore(): Stores
     {
-        return $this->store_id;
+        return $this->store;
     }
 
     /**
-     * get product_id
-     * @return int
+     * get product
+     * @return Products
+     * 
      */
-    public function getProductId(): int
+    public function getProduct(): Products
     {
-        return $this->product_id;
+        return $this->product;
     }
 
     /**
@@ -85,13 +89,13 @@ class Stocks
     }
 
     /**
-     * set store_id
-     * @param int $store_id
+     * set store
+     * @param Stores $store
      * @return Stocks
      */
-    public function setStoreId(int $store_id): Stocks
+    public function setStore(Stores $store): self
     {
-        $this->store_id = $store_id;
+        $this->store = $store;
         return $this;
     }
 
@@ -100,9 +104,14 @@ class Stocks
      * @param int $product_id
      * @return Stocks
      */
-    public function setProductId(int $product_id): Stocks
+    /**
+     * set product
+     * @param Products $product
+     * @return Stocks
+     */
+    public function setProduct(Products $product): self
     {
-        $this->product_id = $product_id;
+        $this->product = $product;
         return $this;
     }
 

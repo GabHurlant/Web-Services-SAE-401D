@@ -26,11 +26,11 @@ class Employees
     private int $employee_id;
 
     /**
-     * @var int
-     * @ORM\Column(type="integer")
+     * @ORM\ManyToOne(targetEntity=Stores::class, inversedBy="employees")
+     * @ORM\JoinColumn(name="store_id", referencedColumnName="store_id")
      */
 
-    private int $store_id;
+    private $store;
 
     /**
      * @var string
@@ -62,7 +62,7 @@ class Employees
 
     public function __toString()
     {
-        return "Employé :{$this->employee_id}, {$this->store_id}, {$this->employee_name}, {$this->employee_email}, {$this->employee_password}, {$this->employee_role}";
+        return "Employé :{$this->employee_id}, {$this->store}, {$this->employee_name}, {$this->employee_email}, {$this->employee_password}, {$this->employee_role}";
     }
 
     //getters & setters
@@ -82,7 +82,7 @@ class Employees
      */
     public function getStoreId(): int
     {
-        return $this->store_id;
+        return $this->store;
     }
 
     /**

@@ -31,7 +31,7 @@ class Brands
 
     private string $brand_name;
 
-    /** 
+    /**
      * @ORM\OneToMany(targetEntity=Products::class, mappedBy="brands")
      */
     private Collection $products;

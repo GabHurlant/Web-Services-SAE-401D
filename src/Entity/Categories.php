@@ -31,8 +31,8 @@ class Categories
 
     private string $category_name;
 
-    /** 
-     * @ORM\OneToMany(targetEntity=Products::class, mappedBy="categories")
+    /**
+     * @ORM\OneToMany(targetEntity=Products::class, mappedBy="category")
      */
     private Collection $products;
 

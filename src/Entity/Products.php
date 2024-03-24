@@ -3,6 +3,8 @@
 
 namespace Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Entity\Brands;
 use Entity\Categories;
@@ -31,16 +33,16 @@ class Products
 
     private string $product_name;
 
-    /** 
-     * @ORM\ManyToOne(targetEntity=Brands::class, inversedBy="products", cascade={"persist"})
-     * @ORM\JoinColumn(name="brand_id", referencedColumnName="id")
+    /**
+     * @ORM\ManyToOne(targetEntity=Brands::class, inversedBy="products")
+     * @ORM\JoinColumn(name="brand_id", referencedColumnName="brand_id")
      */
-    private Brands $brand;
+    private $brands;
 
 
     /** 
      * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="products", cascade={"persist"})
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="category_id")
      */
     private Categories $category;
 
@@ -55,9 +57,19 @@ class Products
      */
     private string $list_price;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Stocks::class, mappedBy="product")
+     */
+    private  Collection $stocks;
+
+    public function __construct()
+    {
+        $this->stocks = new ArrayCollection();
+    }
+
     public function __toString()
     {
-        return "Produit :{$this->product_id}, {$this->product_name}, {$this->brand}, {$this->category}, {$this->model_year}, {$this->list_price}";
+        return "Produit :{$this->product_id}, {$this->product_name}, {$this->brands}, {$this->category}, {$this->model_year}, {$this->list_price}";
     }
 
     //getters & setters
@@ -101,7 +113,7 @@ class Products
      */
     public function getBrand(): Brands
     {
-        return $this->brand;
+        return $this->brands;
     }
 
     /**
@@ -111,7 +123,7 @@ class Products
      */
     public function setBrand(Brands $brand): self
     {
-        $this->brand = $brand;
+        $this->brands = $brand;
         return $this;
     }
 
@@ -174,6 +186,26 @@ class Products
     public function setListPrice(string $list_price): Products
     {
         $this->list_price = $list_price;
+        return $this;
+    }
+
+    /**
+     * get stocks
+     * @return Collection
+     */
+    public function getStocks(): Collection
+    {
+        return $this->stocks;
+    }
+
+    /**
+     * set stocks
+     * @param Collection $stocks
+     * @return Products
+     */
+    public function setStocks(Collection $stocks): Products
+    {
+        $this->stocks = $stocks;
         return $this;
     }
 }
