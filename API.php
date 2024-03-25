@@ -28,13 +28,14 @@ switch ($method) {
         //Code pour la méthode GET
         if (isset($_GET['products'])) {
             $data = array();
-            $stores = $entityManager->getRepository(Products::class)->findAll();
-            foreach ($profucts as $product) {
+            $products = $entityManager->getRepository(Products::class)->findAll();
+            foreach ($products as $product) {
                 $data[] = $product->toArray();
             }
             echo json_encode($data);
         } else {
-            $response = array("status" => 0, "message" => "Invalid Request");
+            $response = array("status" => 0, "message" => "Nothing to show");
+            echo json_encode($response);
         }
         break;
 }
