@@ -283,6 +283,17 @@ class Stores implements JsonSerializable
 
     public function jsonSerialize()
     {
-        return get_object_vars($this);
+        return [
+            'store_id' => $this->store_id,
+            'store_name' => $this->store_name,
+            'phone' => $this->phone,
+            'email' => $this->email,
+            'street' => $this->street,
+            'city' => $this->city,
+            'state' => $this->state,
+            'zip_code' => $this->zip_code,
+            'stocks' => $this->stocks,
+            'employees' => $this->employees
+        ];
     }
 }

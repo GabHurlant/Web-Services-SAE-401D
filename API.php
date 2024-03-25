@@ -27,12 +27,8 @@ switch ($method) {
     case 'GET':
         //Code pour la méthode GET
         if (isset($_GET['products'])) {
-            $data = array();
             $products = $entityManager->getRepository(Products::class)->findAll();
-            foreach ($products as $product) {
-                $data[] = $product->toArray();
-            }
-            echo json_encode($data);
+            echo json_encode($products);
         } else {
             $response = array("status" => 0, "message" => "Nothing to show");
             echo json_encode($response);

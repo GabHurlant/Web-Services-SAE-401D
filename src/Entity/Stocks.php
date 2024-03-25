@@ -129,6 +129,11 @@ class Stocks implements JsonSerializable
 
     public function jsonSerialize()
     {
-        return get_object_vars($this);
+        return [
+            'stock_id' => $this->stock_id,
+            'store' => $this->store,
+            'product' => $this->product,
+            'quantity' => $this->quantity
+        ];
     }
 }

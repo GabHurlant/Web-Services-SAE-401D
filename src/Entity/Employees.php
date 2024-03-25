@@ -169,6 +169,13 @@ class Employees
 
     public function jsonSerialize()
     {
-        return get_object_vars($this);
+        return [
+            'employee_id' => $this->employee_id,
+            'store' => $this->store,
+            'employee_name' => $this->employee_name,
+            'employee_email' => $this->employee_email,
+            'employee_password' => $this->employee_password,
+            'employee_role' => $this->employee_role
+        ];
     }
 }

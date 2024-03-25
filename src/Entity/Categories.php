@@ -91,6 +91,10 @@ class Categories implements JsonSerializable
 
     public function jsonSerialize()
     {
-        return get_object_vars($this);
+        return [
+            'category_id' => $this->category_id,
+            'category_name' => $this->category_name,
+            'products' => $this->products
+        ];
     }
 }

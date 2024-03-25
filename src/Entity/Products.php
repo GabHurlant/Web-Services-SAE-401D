@@ -212,6 +212,14 @@ class Products implements JsonSerializable
 
     public function jsonSerialize()
     {
-        return get_object_vars($this);
+        return [
+            'product_id' => $this->product_id,
+            'product_name' => $this->product_name,
+            'brand' => $this->brands,
+            'category' => $this->category,
+            'model_year' => $this->model_year,
+            'list_price' => $this->list_price,
+            'stocks' => $this->stocks
+        ];
     }
 }

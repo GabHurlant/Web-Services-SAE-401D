@@ -92,6 +92,9 @@ class Brands implements JsonSerializable
 
     public function jsonSerialize()
     {
-        return get_object_vars($this);
+        return [
+            'brand_id' => $this->brand_id,
+            'brand_name' => $this->brand_name,
+        ];
     }
 }
