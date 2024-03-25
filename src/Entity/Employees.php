@@ -165,4 +165,16 @@ class Employees
         $this->employee_role = $employee_role;
         return $this;
     }
+
+    public function toArray(): array
+    {
+        return [
+            "employee_id" => $this->getEmployeeId(),
+            "store_id" => $this->getStoreId(),
+            "employee_name" => $this->getEmployeeName(),
+            "employee_email" => $this->getEmployeeEmail(),
+            "employee_password" => $this->getEmployeePassword(),
+            "employee_role" => $this->getEmployeeRole()
+        ];
+    }
 }

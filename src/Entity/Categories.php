@@ -87,4 +87,12 @@ class Categories
         $this->products = $products;
         return $this;
     }
+
+    public function toArray(): array
+    {
+        return [
+            "category_id" => $this->getCategoryId(),
+            "category_name" => $this->getCategoryName()
+        ];
+    }
 }

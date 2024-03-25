@@ -279,4 +279,18 @@ class Stores
         $this->employees = $employees;
         return $this;
     }
+
+    public function toArray(): array
+    {
+        return [
+            "store_id" => $this->getStoreId(),
+            "store_name" => $this->getStoreName(),
+            "phone" => $this->getPhone(),
+            "email" => $this->getEmail(),
+            "street" => $this->getStreet(),
+            "city" => $this->getCity(),
+            "state" => $this->getState(),
+            "zip_code" => $this->getZipCode()
+        ];
+    }
 }

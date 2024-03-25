@@ -88,4 +88,12 @@ class Brands
         $this->products = $products;
         return $this;
     }
+
+    public function toArray(): array
+    {
+        return [
+            "brand_id" => $this->getBrandId(),
+            "brand_name" => $this->getBrandName()
+        ];
+    }
 }

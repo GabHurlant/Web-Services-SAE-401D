@@ -208,4 +208,16 @@ class Products
         $this->stocks = $stocks;
         return $this;
     }
+
+    public function toArray()
+    {
+        return [
+            'id' => $this->product_id,
+            'name' => $this->product_name,
+            'brand' => $this->brands->toArray(),
+            'category' => $this->category->toArray(),
+            'model_year' => $this->model_year,
+            'list_price' => $this->list_price
+        ];
+    }
 }

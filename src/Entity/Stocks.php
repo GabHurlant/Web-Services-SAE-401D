@@ -125,4 +125,14 @@ class Stocks
         $this->quantity = $quantity;
         return $this;
     }
+
+    public function toArray(): array
+    {
+        return [
+            'stock_id' => $this->stock_id,
+            'store' => $this->store,
+            'product' => $this->product,
+            'quantity' => $this->quantity
+        ];
+    }
 }
