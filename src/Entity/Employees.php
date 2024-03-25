@@ -5,6 +5,7 @@
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
  * @ORM\Entity
@@ -166,15 +167,8 @@ class Employees
         return $this;
     }
 
-    public function toArray(): array
+    public function jsonSerialize()
     {
-        return [
-            "employee_id" => $this->getEmployeeId(),
-            "store_id" => $this->getStoreId(),
-            "employee_name" => $this->getEmployeeName(),
-            "employee_email" => $this->getEmployeeEmail(),
-            "employee_password" => $this->getEmployeePassword(),
-            "employee_role" => $this->getEmployeeRole()
-        ];
+        return get_object_vars($this);
     }
 }

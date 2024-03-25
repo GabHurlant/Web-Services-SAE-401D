@@ -8,13 +8,14 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Entity\Brands;
 use Entity\Categories;
+use JsonSerializable;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="Products")
  */
 
-class Products
+class Products implements JsonSerializable
 {
 
     //déclaration des attributs & annotation doctrines
@@ -209,15 +210,8 @@ class Products
         return $this;
     }
 
-    public function toArray()
+    public function jsonSerialize()
     {
-        return [
-            'id' => $this->product_id,
-            'name' => $this->product_name,
-            'brand' => $this->brands->toArray(),
-            'category' => $this->category->toArray(),
-            'model_year' => $this->model_year,
-            'list_price' => $this->list_price
-        ];
+        return get_object_vars($this);
     }
 }

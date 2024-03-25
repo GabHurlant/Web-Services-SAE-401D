@@ -4,13 +4,14 @@
 namespace Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="Stocks")
  */
 
-class Stocks
+class Stocks implements JsonSerializable
 {
 
     //déclaration des attributs & annotation doctrines
@@ -126,13 +127,8 @@ class Stocks
         return $this;
     }
 
-    public function toArray(): array
+    public function jsonSerialize()
     {
-        return [
-            'stock_id' => $this->stock_id,
-            'store' => $this->store,
-            'product' => $this->product,
-            'quantity' => $this->quantity
-        ];
+        return get_object_vars($this);
     }
 }

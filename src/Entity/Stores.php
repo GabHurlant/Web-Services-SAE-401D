@@ -6,13 +6,14 @@ namespace Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use JsonSerializable;
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="Stores")
  */
 
-class Stores
+class Stores implements JsonSerializable
 {
 
     //déclaration des attributs & annotation doctrines
@@ -280,17 +281,8 @@ class Stores
         return $this;
     }
 
-    public function toArray(): array
+    public function jsonSerialize()
     {
-        return [
-            "store_id" => $this->getStoreId(),
-            "store_name" => $this->getStoreName(),
-            "phone" => $this->getPhone(),
-            "email" => $this->getEmail(),
-            "street" => $this->getStreet(),
-            "city" => $this->getCity(),
-            "state" => $this->getState(),
-            "zip_code" => $this->getZipCode()
-        ];
+        return get_object_vars($this);
     }
 }
