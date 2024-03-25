@@ -29,6 +29,21 @@ switch ($method) {
         if (isset($_GET['products'])) {
             $products = $entityManager->getRepository(Products::class)->findAll();
             echo json_encode($products);
+        } elseif (isset($_GET['categories'])) {
+            $categories = $entityManager->getRepository(Categories::class)->findAll();
+            echo json_encode($categories);
+        } elseif (isset($_GET['brands'])) {
+            $brands = $entityManager->getRepository(Brands::class)->findAll();
+            echo json_encode($brands);
+        } elseif (isset($_GET['employees'])) {
+            $employees = $entityManager->getRepository(Employees::class)->findAll();
+            echo json_encode($employees);
+        } elseif (isset($_GET['stocks'])) {
+            $stocks = $entityManager->getRepository(Stocks::class)->findAll();
+            echo json_encode($stocks);
+        } elseif (isset($_GET['stores'])) {
+            $stores = $entityManager->getRepository(Stores::class)->findAll();
+            echo json_encode($stores);
         } else {
             $response = array("status" => 0, "message" => "Nothing to show");
             echo json_encode($response);

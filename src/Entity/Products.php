@@ -60,6 +60,7 @@ class Products implements JsonSerializable
 
     /**
      * @ORM\OneToMany(targetEntity=Stocks::class, mappedBy="product")
+     * @ORM\JoinColumn(name="product_id", referencedColumnName="product_id")
      */
     private  Collection $stocks;
 
@@ -212,6 +213,7 @@ class Products implements JsonSerializable
 
     public function jsonSerialize()
     {
+        $stocks = $this->getStocks();
         return [
             'product_id' => $this->product_id,
             'product_name' => $this->product_name,

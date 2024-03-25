@@ -12,7 +12,7 @@ use JsonSerializable;
  * @ORM\Table(name="Employees")
  */
 
-class Employees
+class Employees implements JsonSerializable
 {
 
     //déclaration des attributs & annotation doctrines

@@ -3,6 +3,8 @@
 
 namespace Entity;
 
+use Entity\Products;
+use Entity\Stores;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
