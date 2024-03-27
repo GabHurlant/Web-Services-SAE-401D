@@ -82,6 +82,7 @@ switch ($method) {
                     $employees = $entityManager->getRepository(Employees::class)->findAll();
                     echo json_encode($employees);
                     break;
+
                 case 'employeeByStoreName':
                     if (!isset($_GET['api_key']) || !verifyApiKey($_GET['api_key'])) {
                         $response = array("status" => 0, "message" => "API Key is invalid");
@@ -93,6 +94,7 @@ switch ($method) {
                     $employees = $store ? $store->getEmployees()->toArray() : [];
                     echo json_encode($employees);
                     break;
+
                 default:
                     $response = array("status" => 0, "message" => "Nothing to show");
                     echo json_encode($response);
@@ -108,6 +110,7 @@ switch ($method) {
             exit(); // Arrête l'exécution du script si la clé API n'est pas valide
         };
         if (!empty($_POST['action'])) {
+
             switch ($_POST['action']) {
                 case 'addBrand':
                     $brandName = $_POST['name'];
@@ -191,11 +194,12 @@ switch ($method) {
             echo json_encode($response);
             exit(); // Arrête l'exécution du script si la clé API n'est pas valide
         };
-        if (!empty($_POST['action'])) {
-            switch ($_POST['action']) {
+
+        if (!empty($_PUT['action'])) {
+            switch ($_PUT['action']) {
                 case 'updateStock':
-                    $stockId = $_POST['id'];
-                    $quantity = $_POST['quantity'];
+                    $stockId = $_PUT['id'];
+                    $quantity = $_PUT['quantity'];
                     $stock = $entityManager->getRepository(Stocks::class)->find($stockId);
                     $stock->setQuantity($quantity);
                     $entityManager->flush();
@@ -203,10 +207,10 @@ switch ($method) {
                     break;
 
                 case 'updateEmployee':
-                    $employeeName = $_POST['name'];
-                    $employeeEmail = $_POST['email'];
-                    $employeePassword = $_POST['password'];
-                    $employeeRole = $_POST['role'];
+                    $employeeName = $_PUT['name'];
+                    $employeeEmail = $_PUT['email'];
+                    $employeePassword = $_PUT['password'];
+                    $employeeRole = $_PUT['role'];
 
                     $employee = $entityManager->getRepository(Employees::class)->find($employeeName);
                     $employee->setEmployeeName($employeeName);
@@ -220,12 +224,12 @@ switch ($method) {
                     break;
 
                 case 'updateProduct':
-                    $productId = $_POST['id'];
-                    $productName = $_POST['name'];
-                    $brandId = $_POST['brand'];
-                    $categoryId = $_POST['category'];
-                    $price = $_POST['price'];
-                    $year = $_POST['year'];
+                    $productId = $_PUT['id'];
+                    $productName = $_PUT['name'];
+                    $brandId = $_PUT['brand'];
+                    $categoryId = $_PUT['category'];
+                    $price = $_PUT['price'];
+                    $year = $_PUT['year'];
                     $brand = $entityManager->getRepository(Brands::class)->find($brandId);
                     $category = $entityManager->getRepository(Categories::class)->find($categoryId);
                     $product = $entityManager->getRepository(Products::class)->find($productId);
@@ -239,7 +243,7 @@ switch ($method) {
                     break;
 
                 case 'updateBrand':
-                    $brandName = $_POST['name'];
+                    $brandName = $_PUT['name'];
                     $brand = $entityManager->getRepository(Brands::class)->find($brandName);
                     $brand->setBrandName($brandName);
                     $entityManager->flush();
@@ -247,7 +251,7 @@ switch ($method) {
                     break;
 
                 case 'updateCategory':
-                    $categoryName = $_POST['name'];
+                    $categoryName = $_PUT['name'];
                     $category = $entityManager->getRepository(Categories::class)->find($categoryName);
                     $category->setCategoryName($categoryName);
                     $entityManager->flush();
@@ -255,9 +259,9 @@ switch ($method) {
                     break;
 
                 case 'updateStore':
-                    $storeId = $_POST['id'];
-                    $storeName = $_POST['name'];
-                    $storeAddress = $_POST['address'];
+                    $storeId = $_PUT['id'];
+                    $storeName = $_PUT['name'];
+                    $storeAddress = $_PUT['address'];
                     $store = $entityManager->getRepository(Stores::class)->find($storeId);
                     $store->setStoreName($storeName);
                     $store->setStoreAddress($storeAddress);
@@ -267,15 +271,17 @@ switch ($method) {
             }
         }
     case 'DELETE':
+        // Handle DELETE requests
         if (!isset($_GET['api_key']) || !verifyApiKey($_GET['api_key'])) {
             $response = array("status" => 0, "message" => "API Key is invalid");
             echo json_encode($response);
             exit(); // Arrête l'exécution du script si la clé API n'est pas valide
         };
-        if (!empty($_POST['action'])) {
-            switch ($_POST['action']) {
+
+        if (!empty($_DELETE['action'])) {
+            switch ($_DELETE['action']) {
                 case 'deleteStock':
-                    $stockId = $_POST['id'];
+                    $stockId = $_DELETE['id'];
                     $stock = $entityManager->getRepository(Stocks::class)->find($stockId);
                     $entityManager->remove($stock);
                     $entityManager->flush();
@@ -283,15 +289,15 @@ switch ($method) {
                     break;
 
                 case 'deleteEmployee':
-                    $employeeName = $_POST['Name'];
-                    $employee = $entityManager->getRepository(Employees::class)->find($employeeId);
+                    $employeeName = $_DELETE['Name'];
+                    $employee = $entityManager->getRepository(Employees::class)->find($employeeName);
                     $entityManager->remove($employee);
                     $entityManager->flush();
                     echo json_encode($employee);
                     break;
 
                 case 'deleteProduct':
-                    $productName = $_POST['name'];
+                    $productName = $_DELETE['name'];
                     $product = $entityManager->getRepository(Products::class)->find($productName);
                     $entityManager->remove($product);
                     $entityManager->flush();
@@ -299,7 +305,7 @@ switch ($method) {
                     break;
 
                 case 'deleteBrand':
-                    $brandName = $_POST['name'];
+                    $brandName = $_DELETE['name'];
                     $brand = $entityManager->getRepository(Brands::class)->find($brandName);
                     $entityManager->remove($brand);
                     $entityManager->flush();
@@ -307,7 +313,7 @@ switch ($method) {
                     break;
 
                 case 'deleteCategory':
-                    $categoryName = $_POST['name'];
+                    $categoryName = $_DELETE['name'];
                     $category = $entityManager->getRepository(Categories::class)->find($categoryName);
                     $entityManager->remove($category);
                     $entityManager->flush();
