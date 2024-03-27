@@ -217,8 +217,8 @@ class Products implements JsonSerializable
         return [
             'product_id' => $this->product_id,
             'product_name' => $this->product_name,
-            'brand' => $this->brands,
-            'category' => $this->category,
+            'brand' => $this->brands->jsonSerialize(),
+            'category' => $this->category->jsonSerialize(),
             'model_year' => $this->model_year,
             'list_price' => $this->list_price,
             'stocks' => $this->stocks
