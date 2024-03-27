@@ -83,7 +83,7 @@ class Employees implements JsonSerializable
      */
     public function getStoreId(): int
     {
-        return $this->store;
+        return $this->store->getStoreId();
     }
 
     /**
@@ -131,6 +131,17 @@ class Employees implements JsonSerializable
     public function setEmployeeName(string $employee_name): Employees
     {
         $this->employee_name = $employee_name;
+        return $this;
+    }
+
+    /**
+     * set store_id
+     * @param Stores $store
+     * @return Employees
+     */
+    public function setStore(Stores $store): self
+    {
+        $this->store = $store;
         return $this;
     }
 

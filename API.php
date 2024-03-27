@@ -37,34 +37,61 @@ switch ($method) {
                     $products = $entityManager->getRepository(Products::class)->findAll();
                     echo json_encode($products);
                     break;
+
                 case 'productById':
                     $productId = $_GET['id'];
                     $product = $entityManager->getRepository(Products::class)->find($productId);
                     echo json_encode($product);
                     break;
+
                 case 'productByCategory':
                     $categoryName = $_GET['category'];
                     $category = $entityManager->getRepository(Categories::class)->findOneBy(['category_name' => $categoryName]);
                     $products = $category ? $category->getProducts()->toArray() : [];
                     echo json_encode($products);
                     break;
+
                 case 'productByBrand':
                     $brandName = $_GET['brand'];
                     $brand = $entityManager->getRepository(Brands::class)->findOneBy(['brand_name' => $brandName]);
                     $products = $brand ? $brand->getProducts()->toArray() : [];
                     echo json_encode($products);
                     break;
+
                 case 'brands':
                     $brands = $entityManager->getRepository(Brands::class)->findAll();
                     echo json_encode($brands);
                     break;
+
                 case 'stores':
                     $stores = $entityManager->getRepository(Stores::class)->findAll();
                     echo json_encode($stores);
                     break;
+
                 case 'categories':
                     $categories = $entityManager->getRepository(Categories::class)->findAll();
                     echo json_encode($categories);
+                    break;
+
+                case 'employees':
+                    if (!isset($_GET['api_key']) || !verifyApiKey($_GET['api_key'])) {
+                        $response = array("status" => 0, "message" => "API Key is invalid");
+                        echo json_encode($response);
+                        exit(); // Arrête l'exécution du script si la clé API n'est pas valide
+                    };
+                    $employees = $entityManager->getRepository(Employees::class)->findAll();
+                    echo json_encode($employees);
+                    break;
+                case 'employeeByStoreName':
+                    if (!isset($_GET['api_key']) || !verifyApiKey($_GET['api_key'])) {
+                        $response = array("status" => 0, "message" => "API Key is invalid");
+                        echo json_encode($response);
+                        exit(); // Arrête l'exécution du script si la clé API n'est pas valide
+                    };
+                    $storeName = $_GET['store'];
+                    $store = $entityManager->getRepository(Stores::class)->find($storeName);
+                    $employees = $store ? $store->getEmployees()->toArray() : [];
+                    echo json_encode($employees);
                     break;
                 default:
                     $response = array("status" => 0, "message" => "Nothing to show");
@@ -132,6 +159,159 @@ switch ($method) {
                     $entityManager->persist($stock);
                     $entityManager->flush();
                     echo json_encode($stock);
+                    break;
+
+                case 'addEmployee':
+                    $storeId = $_POST['store'];
+                    $employeeName = $_POST['name'];
+                    $employeeEmail = $_POST['email'];
+                    $employeePassword = $_POST['password'];
+                    $employeeRole = $_POST['role'];
+
+                    $store = $entityManager->getRepository(Stores::class)->find($storeId);
+
+                    $employee = new Employees();
+                    $employee->setStore($store);
+                    $employee->setEmployeeName($employeeName);
+                    $employee->setEmployeeEmail($employeeEmail);
+                    $employee->setEmployeePassword($employeePassword);
+                    $employee->setEmployeeRole($employeeRole);
+
+                    $entityManager->persist($employee);
+                    $entityManager->flush();
+
+                    echo json_encode($employee);
+                    break;
+            }
+        }
+    case 'PUT':
+        // Handle POST request
+        if (!isset($_GET['api_key']) || !verifyApiKey($_GET['api_key'])) {
+            $response = array("status" => 0, "message" => "API Key is invalid");
+            echo json_encode($response);
+            exit(); // Arrête l'exécution du script si la clé API n'est pas valide
+        };
+        if (!empty($_POST['action'])) {
+            switch ($_POST['action']) {
+                case 'updateStock':
+                    $stockId = $_POST['id'];
+                    $quantity = $_POST['quantity'];
+                    $stock = $entityManager->getRepository(Stocks::class)->find($stockId);
+                    $stock->setQuantity($quantity);
+                    $entityManager->flush();
+                    echo json_encode($stock);
+                    break;
+
+                case 'updateEmployee':
+                    $employeeName = $_POST['name'];
+                    $employeeEmail = $_POST['email'];
+                    $employeePassword = $_POST['password'];
+                    $employeeRole = $_POST['role'];
+
+                    $employee = $entityManager->getRepository(Employees::class)->find($employeeName);
+                    $employee->setEmployeeName($employeeName);
+                    $employee->setEmployeeEmail($employeeEmail);
+                    $employee->setEmployeePassword($employeePassword);
+                    $employee->setEmployeeRole($employeeRole);
+
+                    $entityManager->flush();
+
+                    echo json_encode($employee);
+                    break;
+
+                case 'updateProduct':
+                    $productId = $_POST['id'];
+                    $productName = $_POST['name'];
+                    $brandId = $_POST['brand'];
+                    $categoryId = $_POST['category'];
+                    $price = $_POST['price'];
+                    $year = $_POST['year'];
+                    $brand = $entityManager->getRepository(Brands::class)->find($brandId);
+                    $category = $entityManager->getRepository(Categories::class)->find($categoryId);
+                    $product = $entityManager->getRepository(Products::class)->find($productId);
+                    $product->setProductName($productName);
+                    $product->setBrand($brand);
+                    $product->setCategory($category);
+                    $product->setListPrice($price);
+                    $product->setModelYear($year);
+                    $entityManager->flush();
+                    echo json_encode($product);
+                    break;
+
+                case 'updateBrand':
+                    $brandName = $_POST['name'];
+                    $brand = $entityManager->getRepository(Brands::class)->find($brandName);
+                    $brand->setBrandName($brandName);
+                    $entityManager->flush();
+                    echo json_encode($brand);
+                    break;
+
+                case 'updateCategory':
+                    $categoryName = $_POST['name'];
+                    $category = $entityManager->getRepository(Categories::class)->find($categoryName);
+                    $category->setCategoryName($categoryName);
+                    $entityManager->flush();
+                    echo json_encode($category);
+                    break;
+
+                case 'updateStore':
+                    $storeId = $_POST['id'];
+                    $storeName = $_POST['name'];
+                    $storeAddress = $_POST['address'];
+                    $store = $entityManager->getRepository(Stores::class)->find($storeId);
+                    $store->setStoreName($storeName);
+                    $store->setStoreAddress($storeAddress);
+                    $entityManager->flush();
+                    echo json_encode($store);
+                    break;
+            }
+        }
+    case 'DELETE':
+        if (!isset($_GET['api_key']) || !verifyApiKey($_GET['api_key'])) {
+            $response = array("status" => 0, "message" => "API Key is invalid");
+            echo json_encode($response);
+            exit(); // Arrête l'exécution du script si la clé API n'est pas valide
+        };
+        if (!empty($_POST['action'])) {
+            switch ($_POST['action']) {
+                case 'deleteStock':
+                    $stockId = $_POST['id'];
+                    $stock = $entityManager->getRepository(Stocks::class)->find($stockId);
+                    $entityManager->remove($stock);
+                    $entityManager->flush();
+                    echo json_encode($stock);
+                    break;
+
+                case 'deleteEmployee':
+                    $employeeName = $_POST['Name'];
+                    $employee = $entityManager->getRepository(Employees::class)->find($employeeId);
+                    $entityManager->remove($employee);
+                    $entityManager->flush();
+                    echo json_encode($employee);
+                    break;
+
+                case 'deleteProduct':
+                    $productName = $_POST['name'];
+                    $product = $entityManager->getRepository(Products::class)->find($productName);
+                    $entityManager->remove($product);
+                    $entityManager->flush();
+                    echo json_encode($product);
+                    break;
+
+                case 'deleteBrand':
+                    $brandName = $_POST['name'];
+                    $brand = $entityManager->getRepository(Brands::class)->find($brandName);
+                    $entityManager->remove($brand);
+                    $entityManager->flush();
+                    echo json_encode($brand);
+                    break;
+
+                case 'deleteCategory':
+                    $categoryName = $_POST['name'];
+                    $category = $entityManager->getRepository(Categories::class)->find($categoryName);
+                    $entityManager->remove($category);
+                    $entityManager->flush();
+                    echo json_encode($category);
                     break;
             }
         }
