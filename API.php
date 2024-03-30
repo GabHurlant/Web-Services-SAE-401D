@@ -113,11 +113,23 @@ switch ($method) {
 
             switch ($_POST['action']) {
                 case 'addBrand':
+                    if (!isset($_POST['name']) || empty($_POST['name'])) {
+                        $response = array("status" => 0, "message" => "Brand's name required");
+                        echo json_encode($response);
+                        exit();
+                    }
                     $brandName = $_POST['name'];
+                    $existingBrand = $entityManager->getRepository(Brands::class)->findOneBy(['brandName' => $brandName]);
+                    if ($existingBrand) {
+                        $response = array("status" => 0, "message" => "already in the database");
+                        echo json_encode($response);
+                        exit();
+                    }
                     $brand = new Brands();
                     $brand->setBrandName($brandName);
                     $entityManager->persist($brand);
                     $entityManager->flush();
+                    $response = array("status" => 1, "message" => "Brand added successfully", "data" => $brand);
                     echo json_encode($brand);
                     break;
 
@@ -184,6 +196,11 @@ switch ($method) {
                     $entityManager->flush();
 
                     echo json_encode($employee);
+                    break;
+
+                default:
+                    $response = array("status" => 0, "message" => "problem to add");
+                    echo json_encode($response);
                     break;
             }
         }
