@@ -113,18 +113,18 @@ switch ($method) {
 
             switch ($_POST['action']) {
                 case 'addBrand':
-                    if (!isset($_POST['name']) || empty($_POST['name'])) {
-                        $response = array("status" => 0, "message" => "Brand's name required");
-                        echo json_encode($response);
-                        exit();
-                    }
+                    // if (!isset($_POST['name']) || empty($_POST['name'])) {
+                    //     $response = array("status" => 0, "message" => "Brand's name required");
+                    //     echo json_encode($response);
+                    //     exit();
+                    // }
                     $brandName = $_POST['name'];
-                    $existingBrand = $entityManager->getRepository(Brands::class)->findOneBy(['brandName' => $brandName]);
-                    if ($existingBrand) {
-                        $response = array("status" => 0, "message" => "already in the database");
-                        echo json_encode($response);
-                        exit();
-                    }
+                    // $existingBrand = $entityManager->getRepository(Brands::class)->findOneBy(['brandName' => $brandName]);
+                    // if ($existingBrand) {
+                    //     $response = array("status" => 0, "message" => "already in the database");
+                    //     echo json_encode($response);
+                    //     exit();
+                    // }
                     $brand = new Brands();
                     $brand->setBrandName($brandName);
                     $entityManager->persist($brand);
@@ -134,11 +134,23 @@ switch ($method) {
                     break;
 
                 case 'addCategory':
+                    if (!isset($_POST['name']) || empty($_POST['name'])) {
+                        $response = array("status" => 0, "message" => "Category name required");
+                        echo json_encode($response);
+                        exit();
+                    }
                     $categoryName = $_POST['name'];
+                    $existingCategory = $entityManager->getRepository(Categories::class)->findOneBy(['categoryName' => $categoryName]);
+                    if ($existingCategory) {
+                        $response = array("status" => 0, "message" => "already in the database");
+                        echo json_encode($response);
+                        exit();
+                    }
                     $category = new Categories();
                     $category->setCategoryName($categoryName);
                     $entityManager->persist($category);
                     $entityManager->flush();
+                    $response = array("status" => 1, "message" => "Category added successfully", "data" => $category);
                     echo json_encode($category);
                     break;
 
