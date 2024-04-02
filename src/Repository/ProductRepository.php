@@ -22,9 +22,9 @@ class ProductsRepository extends EntityRepository
             $this->_em->persist($Product);
             $this->_em->flush();
 
-            $response = array("status" => 1, "status_message" => "Le produit $ProductName a été créée avec succès.");
+            $response = array("status" => 1, "status_message" => "$ProductName Added successfully.");
         } catch (\Exception $e) {
-            $response = array("status" => 0, "status_message" => "Erreur lors de la création du produit : " . $e->getMessage());
+            $response = array("status" => 0, "status_message" => "Error while creating : " . $e->getMessage());
         }
         return json_encode($response);
     }
