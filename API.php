@@ -113,29 +113,10 @@ switch ($method) {
 
             switch ($_POST['action']) {
                 case 'addBrand':
-                    try {
-                        if (!isset($_POST['name']) || empty($_POST['name'])) {
-                            $response = array("status" => 0, "message" => "Brand's name required");
-                            echo json_encode($response);
-                            exit();
-                        }
-                        $brandName = $_POST['name'];
-                        $existingBrand = $entityManager->getRepository(Brands::class)->findOneBy(['brandName' => $brandName]);
-                        if ($existingBrand) {
-                            $response = array("status" => 0, "message" => "already in the database");
-                            echo json_encode($response);
-                            exit();
-                        }
-                        $brand = new Brands();
-                        $brand->setBrandName($brandName);
-                        $entityManager->persist($brand);
-                        $entityManager->flush();
-                        $response = array("status" => 1, "message" => "Brand added successfully", "data" => $brand);
-                        echo json_encode($response);
-                    } catch (Exception $e) {
-                        $response = array("status" => 0, "message" => "An error occurred: " . $e->getMessage());
-                        echo json_encode($response);
-                    }
+                    $brandName = $_GET['name'];
+                    $brandRepository = $entityManager->getRepository(Brands::class);
+                    $newBrand = $brandRepository->insertNewBrand($brandName);
+                    echo json_encode($newBrand);
                     break;
 
                 case 'addCategory':
@@ -165,48 +146,12 @@ switch ($method) {
                     break;
 
                 case 'addProduct':
-                    try {
-
-                        if (
-                            !isset($_POST['name']) || empty($_POST['name']) ||
-                            !isset($_POST['brand']) || empty($_POST['brand']) ||
-                            !isset($_POST['category']) || empty($_POST['category']) ||
-                            !isset($_POST['price']) || empty($_POST['price']) ||
-                            !isset($_POST['year']) || empty($_POST['year'])
-                        ) {
-                            $response = array("status" => 0, "message" => "All fields are required");
-                            echo json_encode($response);
-                            exit();
-                        }
-                        $productName = $_POST['name'];
-                        $brandId = $_POST['brand'];
-                        $categoryId = $_POST['category'];
-                        $price = $_POST['price'];
-                        $year = $_POST['year'];
-                        $brand = $entityManager->getRepository(Brands::class)->find($brandId);
-                        $category = $entityManager->getRepository(Categories::class)->find($categoryId);
-
-                        // Vérifiez si le produit existe déjà
-                        $existingProduct = $entityManager->getRepository(Products::class)->findOneBy(['productName' => $productName]);
-                        if ($existingProduct) {
-                            $response = array("status" => 0, "message" => "Product already in the database");
-                            echo json_encode($response);
-                            exit();
-                        }
-
-                        $product = new Products();
-                        $product->setProductName($productName);
-                        $product->setBrand($brand);
-                        $product->setCategory($category);
-                        $product->setListPrice($price);
-                        $product->setModelYear($year);
-                        $entityManager->persist($product);
-                        $entityManager->flush();
-                        echo json_encode($response);
-                    } catch (Exception $e) {
-                        $response = array("status" => 0, "message" => "An error occurred: " . $e->getMessage());
-                        echo json_encode($response);
-                    }
+                    $productName = $_GET['name'];
+                    $modelYear = $_GET['year'];
+                    $listPrice = $_GET['price'];
+                    $productRepository = $entityManager->getRepository(Products::class);
+                    $newProduct = $productRepository->insertNewProduct($productName, $modelYear, $listPrice);
+                    echo json_encode($newProduct);
                     break;
 
                 case 'addStock':

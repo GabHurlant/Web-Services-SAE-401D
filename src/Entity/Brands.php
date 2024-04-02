@@ -9,7 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use JsonSerializable;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Repository\BrandsRepository::class")
  * @ORM\Table(name="Brands")
  */
 
