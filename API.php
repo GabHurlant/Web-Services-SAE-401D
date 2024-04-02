@@ -146,9 +146,9 @@ switch ($method) {
                     break;
 
                 case 'addProduct':
-                    $productName = $_GET['name'];
-                    $modelYear = $_GET['year'];
-                    $listPrice = $_GET['price'];
+                    $productName = $_POST['name'];
+                    $modelYear = $_POST['year'];
+                    $listPrice = $_POST['price'];
                     $productRepository = $entityManager->getRepository(Products::class);
                     $newProduct = $productRepository->insertNewProduct($productName, $modelYear, $listPrice);
                     echo json_encode($newProduct);
