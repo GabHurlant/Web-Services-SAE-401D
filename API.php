@@ -131,7 +131,7 @@ switch ($method) {
                         $entityManager->persist($brand);
                         $entityManager->flush();
                         $response = array("status" => 1, "message" => "Brand added successfully", "data" => $brand);
-                        echo json_encode($brand);
+                        echo json_encode($response);
                     } catch (Exception $e) {
                         $response = array("status" => 0, "message" => "An error occurred: " . $e->getMessage());
                         echo json_encode($response);
@@ -157,7 +157,7 @@ switch ($method) {
                         $entityManager->persist($category);
                         $entityManager->flush();
                         $response = array("status" => 1, "message" => "Category added successfully", "data" => $category);
-                        echo json_encode($category);
+                        echo json_encode($response);
                     } catch (Exception $e) {
                         $response = array("status" => 0, "message" => "An error occurred: " . $e->getMessage());
                         echo json_encode($response);
@@ -202,7 +202,7 @@ switch ($method) {
                         $product->setModelYear($year);
                         $entityManager->persist($product);
                         $entityManager->flush();
-                        echo json_encode($product);
+                        echo json_encode($response);
                     } catch (Exception $e) {
                         $response = array("status" => 0, "message" => "An error occurred: " . $e->getMessage());
                         echo json_encode($response);
@@ -241,7 +241,7 @@ switch ($method) {
                         $stock->setQuantity($quantity);
                         $entityManager->persist($stock);
                         $entityManager->flush();
-                        echo json_encode($stock);
+                        echo json_encode($response);
                     } catch (Exception $e) {
                         $response = array("status" => 0, "message" => "An error occurred: " . $e->getMessage());
                         echo json_encode($response);
@@ -288,7 +288,7 @@ switch ($method) {
                         $entityManager->persist($employee);
                         $entityManager->flush();
 
-                        echo json_encode($employee);
+                        echo json_encode($response);
                     } catch (Exception $e) {
                         $response = array("status" => 0, "message" => "An error occurred: " . $e->getMessage());
                         echo json_encode($response);
