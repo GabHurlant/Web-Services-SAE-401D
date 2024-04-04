@@ -69,7 +69,7 @@ switch ($method) {
                     break;
 
                 case 'stores':
-                    $stores = $entityManager->getRepository(Stores::class)->findAll();
+                    $stores = $entityManager->getRepository(Stores::class)->getStores();
                     echo json_encode($stores);
                     break;
 
@@ -84,7 +84,7 @@ switch ($method) {
                         echo json_encode($response);
                         exit(); // Arrête l'exécution du script si la clé API n'est pas valide
                     };
-                    $employees = $entityManager->getRepository(Employees::class)->findAll();
+                    $employees = $entityManager->getRepository(Employees::class)->getAllEmployees();
                     echo json_encode($employees);
                     break;
 
@@ -94,12 +94,15 @@ switch ($method) {
                         echo json_encode($response);
                         exit(); // Arrête l'exécution du script si la clé API n'est pas valide
                     };
+                    if (!isset($_GET['store'])) {
+                        echo json_encode(array("status" => 0, "message" => "Store name is required"));
+                        exit();
+                    }
+
                     $storeName = $_GET['store'];
-                    $store = $entityManager->getRepository(Stores::class)->find($storeName);
-                    $employees = $store ? $store->getEmployees()->toArray() : [];
+                    $employees = $entityManager->getRepository(Stores::class)->getEmployeesByStoreName($storeName);
                     echo json_encode($employees);
                     break;
-
                 default:
                     $response = array("status" => 0, "message" => "Nothing to show");
                     echo json_encode($response);
@@ -186,7 +189,6 @@ switch ($method) {
 
                 case 'addEmployee':
                     try {
-
                         if (
                             !isset($_POST['store']) || empty($_POST['store']) ||
                             !isset($_POST['name']) || empty($_POST['name']) ||
@@ -204,26 +206,8 @@ switch ($method) {
                         $employeePassword = $_POST['password'];
                         $employeeRole = $_POST['role'];
 
-                        $store = $entityManager->getRepository(Stores::class)->find($storeId);
-
-                        // Vérifiez si l'employé existe déjà
-                        $existingEmployee = $entityManager->getRepository(Employees::class)->findOneBy(['employeeEmail' => $employeeEmail]);
-                        if ($existingEmployee) {
-                            $response = array("status" => 0, "message" => "Employee already in the database");
-                            echo json_encode($response);
-                            exit();
-                        }
-
-                        $employee = new Employees();
-                        $employee->setStore($store);
-                        $employee->setEmployeeName($employeeName);
-                        $employee->setEmployeeEmail($employeeEmail);
-                        $employee->setEmployeePassword($employeePassword);
-                        $employee->setEmployeeRole($employeeRole);
-
-                        $entityManager->persist($employee);
-                        $entityManager->flush();
-
+                        // Appel de la fonction addEmployee
+                        $response = $entityManager->getRepository(Employees::class)->addEmployee($storeId, $employeeName, $employeeEmail, $employeePassword, $employeeRole);
                         echo json_encode($response);
                     } catch (Exception $e) {
                         $response = array("status" => 0, "message" => "An error occurred: " . $e->getMessage());
@@ -271,25 +255,29 @@ switch ($method) {
                     break;
 
                 case 'updateEmployee':
-                    $employeeName = $_PUT['name'];
-                    $employeeEmail = $_PUT['email'];
-                    $employeePassword = $_PUT['password'];
-                    $employeeRole = $_PUT['role'];
+                    try {
+                        if (
+                            !isset($_PUT['name']) || empty($_PUT['name']) ||
+                            !isset($_PUT['email']) || empty($_PUT['email']) ||
+                            !isset($_PUT['password']) || empty($_PUT['password']) ||
+                            !isset($_PUT['role']) || empty($_PUT['role'])
+                        ) {
+                            $response = array("status" => 0, "message" => "All fields are required");
+                            echo json_encode($response);
+                            exit();
+                        }
+                        $employeeName = $_PUT['name'];
+                        $employeeEmail = $_PUT['email'];
+                        $employeePassword = $_PUT['password'];
+                        $employeeRole = $_PUT['role'];
 
-                    $employee = $entityManager->getRepository(Employees::class)->findOneBy($employeeName);
-                    if (!$employee) {
-                        $response = array("status" => 0, "message" => "Employee not found");
+                        // Appel de la fonction updateEmployee
+                        $response = $entityManager->getRepository(Employees::class)->updateEmployee($employeeName, $employeeEmail, $employeePassword, $employeeRole);
                         echo json_encode($response);
-                        exit();
+                    } catch (Exception $e) {
+                        $response = array("status" => 0, "message" => "An error occurred: " . $e->getMessage());
+                        echo json_encode($response);
                     }
-                    $employee->setEmployeeName($employeeName);
-                    $employee->setEmployeeEmail($employeeEmail);
-                    $employee->setEmployeePassword($employeePassword);
-                    $employee->setEmployeeRole($employeeRole);
-
-                    $entityManager->flush();
-
-                    echo json_encode($employee);
                     break;
 
                 case 'updateProduct':
@@ -429,22 +417,22 @@ switch ($method) {
                     break;
 
                 case 'deleteEmployee':
-                    if (!isset($_DELETE['Name']) || empty($_DELETE['Name'])) {
-                        $response = array("status" => 0, "message" => "Employee name is required");
-                        echo json_encode($response);
-                        exit();
-                    }
+                    try {
+                        if (!isset($_DELETE['Name']) || empty($_DELETE['Name'])) {
+                            $response = array("status" => 0, "message" => "Employee name is required");
+                            echo json_encode($response);
+                            exit();
+                        }
 
-                    $employeeName = $_DELETE['Name'];
-                    $employee = $entityManager->getRepository(Employees::class)->findOneBy(['name' => $employeeName]);
-                    if (!$employee) {
-                        $response = array("status" => 0, "message" => "Employee not found");
+                        $employeeName = $_DELETE['Name'];
+
+                        // Appel de la fonction deleteEmployee
+                        $response = $entityManager->getRepository(Employees::class)->deleteEmployee($employeeName);
                         echo json_encode($response);
-                        exit();
+                    } catch (Exception $e) {
+                        $response = array("status" => 0, "message" => "An error occurred: " . $e->getMessage());
+                        echo json_encode($response);
                     }
-                    $entityManager->remove($employee);
-                    $entityManager->flush();
-                    echo json_encode(array("status" => 1, "message" => "Employee deleted successfully"));
                     break;
 
                 case 'deleteProduct':
