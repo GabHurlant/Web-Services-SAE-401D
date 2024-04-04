@@ -149,70 +149,46 @@ switch ($method) {
                     break;
 
                 case 'addStock':
-                    try {
-
-                        if (
-                            !isset($_POST['store']) || empty($_POST['store']) ||
-                            !isset($_POST['product']) || empty($_POST['product']) ||
-                            !isset($_POST['quantity']) || empty($_POST['quantity'])
-                        ) {
-                            $response = array("status" => 0, "message" => "All fields are required");
-                            echo json_encode($response);
-                            exit();
-                        }
-                        $storeId = $_POST['store'];
-                        $productId = $_POST['product'];
-                        $quantity = $_POST['quantity'];
-                        $store = $entityManager->getRepository(Stores::class)->find($storeId);
-                        $product = $entityManager->getRepository(Products::class)->find($productId);
-
-                        // Vérifiez si le stock existe déjà
-                        $existingStock = $entityManager->getRepository(Stocks::class)->findOneBy(['store' => $store, 'product' => $product]);
-                        if ($existingStock) {
-                            $response = array("status" => 0, "message" => "Stock already in the database");
-                            echo json_encode($response);
-                            exit();
-                        }
-
-                        $stock = new Stocks();
-                        $stock->setStore($store);
-                        $stock->setProduct($product);
-                        $stock->setQuantity($quantity);
-                        $entityManager->persist($stock);
-                        $entityManager->flush();
+                    if (
+                        !isset($_POST['store']) || empty($_POST['store']) ||
+                        !isset($_POST['product']) || empty($_POST['product']) ||
+                        !isset($_POST['quantity']) || empty($_POST['quantity'])
+                    ) {
+                        $response = array("status" => 0, "message" => "All fields are required");
                         echo json_encode($response);
-                    } catch (Exception $e) {
-                        $response = array("status" => 0, "message" => "An error occurred: " . $e->getMessage());
-                        echo json_encode($response);
+                        exit();
                     }
+                    $storeId = $_POST['store'];
+                    $productId = $_POST['product'];
+                    $quantity = $_POST['quantity'];
+
+                    // Appeler la fonction addStock
+                    $stockRepo = $entityManager->getRepository(Stocks::class);
+                    $stock = $stockRepo->addStock($storeId, $productId, $quantity);
+                    echo json_encode($stock);
                     break;
 
                 case 'addEmployee':
-                    try {
-                        if (
-                            !isset($_POST['store']) || empty($_POST['store']) ||
-                            !isset($_POST['name']) || empty($_POST['name']) ||
-                            !isset($_POST['email']) || empty($_POST['email']) ||
-                            !isset($_POST['password']) || empty($_POST['password']) ||
-                            !isset($_POST['role']) || empty($_POST['role'])
-                        ) {
-                            $response = array("status" => 0, "message" => "All fields are required");
-                            echo json_encode($response);
-                            exit();
-                        }
-                        $storeId = $_POST['store'];
-                        $employeeName = $_POST['name'];
-                        $employeeEmail = $_POST['email'];
-                        $employeePassword = $_POST['password'];
-                        $employeeRole = $_POST['role'];
-
-                        // Appel de la fonction addEmployee
-                        $response = $entityManager->getRepository(Employees::class)->addEmployee($storeId, $employeeName, $employeeEmail, $employeePassword, $employeeRole);
+                    if (
+                        !isset($_POST['store']) || empty($_POST['store']) ||
+                        !isset($_POST['name']) || empty($_POST['name']) ||
+                        !isset($_POST['email']) || empty($_POST['email']) ||
+                        !isset($_POST['password']) || empty($_POST['password']) ||
+                        !isset($_POST['role']) || empty($_POST['role'])
+                    ) {
+                        $response = array("status" => 0, "message" => "All fields are required");
                         echo json_encode($response);
-                    } catch (Exception $e) {
-                        $response = array("status" => 0, "message" => "An error occurred: " . $e->getMessage());
-                        echo json_encode($response);
+                        exit();
                     }
+                    $storeId = $_POST['store'];
+                    $employeeName = $_POST['name'];
+                    $employeeEmail = $_POST['email'];
+                    $employeePassword = $_POST['password'];
+                    $employeeRole = $_POST['role'];
+
+                    // Appel de la fonction addEmployee
+                    $response = $entityManager->getRepository(Employees::class)->addEmployee($storeId, $employeeName, $employeeEmail, $employeePassword, $employeeRole);
+                    echo json_encode($response);
                     break;
 
                 default:
@@ -240,44 +216,33 @@ switch ($method) {
                         echo json_encode($response);
                         exit();
                     }
-
                     $stockId = $_PUT['id'];
                     $quantity = $_PUT['quantity'];
-                    $stock = $entityManager->getRepository(Stocks::class)->find($stockId);
-                    if (!$stock) {
-                        $response = array("status" => 0, "message" => "Stock not found");
-                        echo json_encode($response);
-                        exit();
-                    }
-                    $stock->setQuantity($quantity);
-                    $entityManager->flush();
-                    echo json_encode($stock);
+
+                    // Appel de la fonction updateStock
+                    $response = $entityManager->getRepository(Stocks::class)->updateStock($stockId, $quantity);
+                    echo json_encode($response);
                     break;
 
                 case 'updateEmployee':
-                    try {
-                        if (
-                            !isset($_PUT['name']) || empty($_PUT['name']) ||
-                            !isset($_PUT['email']) || empty($_PUT['email']) ||
-                            !isset($_PUT['password']) || empty($_PUT['password']) ||
-                            !isset($_PUT['role']) || empty($_PUT['role'])
-                        ) {
-                            $response = array("status" => 0, "message" => "All fields are required");
-                            echo json_encode($response);
-                            exit();
-                        }
-                        $employeeName = $_PUT['name'];
-                        $employeeEmail = $_PUT['email'];
-                        $employeePassword = $_PUT['password'];
-                        $employeeRole = $_PUT['role'];
-
-                        // Appel de la fonction updateEmployee
-                        $response = $entityManager->getRepository(Employees::class)->updateEmployee($employeeName, $employeeEmail, $employeePassword, $employeeRole);
+                    if (
+                        !isset($_PUT['name']) || empty($_PUT['name']) ||
+                        !isset($_PUT['email']) || empty($_PUT['email']) ||
+                        !isset($_PUT['password']) || empty($_PUT['password']) ||
+                        !isset($_PUT['role']) || empty($_PUT['role'])
+                    ) {
+                        $response = array("status" => 0, "message" => "All fields are required");
                         echo json_encode($response);
-                    } catch (Exception $e) {
-                        $response = array("status" => 0, "message" => "An error occurred: " . $e->getMessage());
-                        echo json_encode($response);
+                        exit();
                     }
+                    $employeeName = $_PUT['name'];
+                    $employeeEmail = $_PUT['email'];
+                    $employeePassword = $_PUT['password'];
+                    $employeeRole = $_PUT['role'];
+
+                    // Appel de la fonction updateEmployee
+                    $response = $entityManager->getRepository(Employees::class)->updateEmployee($employeeName, $employeeEmail, $employeePassword, $employeeRole);
+                    echo json_encode($response);
                     break;
 
                 case 'updateProduct':
@@ -415,22 +380,17 @@ switch ($method) {
                     break;
 
                 case 'deleteEmployee':
-                    try {
-                        if (!isset($_DELETE['Name']) || empty($_DELETE['Name'])) {
-                            $response = array("status" => 0, "message" => "Employee name is required");
-                            echo json_encode($response);
-                            exit();
-                        }
-
-                        $employeeName = $_DELETE['Name'];
-
-                        // Appel de la fonction deleteEmployee
-                        $response = $entityManager->getRepository(Employees::class)->deleteEmployee($employeeName);
+                    if (!isset($_DELETE['Name']) || empty($_DELETE['Name'])) {
+                        $response = array("status" => 0, "message" => "Employee name is required");
                         echo json_encode($response);
-                    } catch (Exception $e) {
-                        $response = array("status" => 0, "message" => "An error occurred: " . $e->getMessage());
-                        echo json_encode($response);
+                        exit();
                     }
+
+                    $employeeName = $_DELETE['Name'];
+
+                    // Appel de la fonction deleteEmployee
+                    $response = $entityManager->getRepository(Employees::class)->deleteEmployee($employeeName);
+                    echo json_encode($response);
                     break;
 
                 case 'deleteProduct':
