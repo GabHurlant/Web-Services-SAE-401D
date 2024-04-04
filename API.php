@@ -33,33 +33,38 @@ switch ($method) {
     case 'GET':
         if (!empty($_GET['action'])) {
             switch ($_GET['action']) {
+
                 case 'products':
-                    $products = $entityManager->getRepository(Products::class)->findAll();
+
+                    $products = $entityManager->getRepository(Products::class)->getAllProducts();
                     echo json_encode($products);
                     break;
 
                 case 'productById':
-                    $productId = $_GET['id'];
-                    $product = $entityManager->getRepository(Products::class)->find($productId);
+                    if (!isset($_GET['id'])) {
+                        echo json_encode(array("status" => 0, "message" => "Product id is required"));
+                        exit();
+                    }
+
+                    $id = $_GET['id'];
+                    $product = $entityManager->getRepository(Products::class)->getProductById($id);
                     echo json_encode($product);
                     break;
 
                 case 'productByCategory':
                     $categoryName = $_GET['category'];
-                    $category = $entityManager->getRepository(Categories::class)->findOneBy(['category_name' => $categoryName]);
-                    $products = $category ? $category->getProducts()->toArray() : [];
+                    $products = $entityManager->getRepository(Categories::class)->findProductsByCategoryName($categoryName);
                     echo json_encode($products);
                     break;
 
                 case 'productByBrand':
                     $brandName = $_GET['brand'];
-                    $brand = $entityManager->getRepository(Brands::class)->findOneBy(['brand_name' => $brandName]);
-                    $products = $brand ? $brand->getProducts()->toArray() : [];
+                    $products = $entityManager->getRepository(Brands::class)->findProductsByBrandName($brandName);
                     echo json_encode($products);
                     break;
 
                 case 'brands':
-                    $brands = $entityManager->getRepository(Brands::class)->findAll();
+                    $brands = $entityManager->getRepository(Brands::class)->getAllBrands();
                     echo json_encode($brands);
                     break;
 
@@ -69,7 +74,7 @@ switch ($method) {
                     break;
 
                 case 'categories':
-                    $categories = $entityManager->getRepository(Categories::class)->findAll();
+                    $categories = $entityManager->getRepository(Categories::class)->getAllCategories();
                     echo json_encode($categories);
                     break;
 
@@ -120,32 +125,18 @@ switch ($method) {
                     break;
 
                 case 'addCategory':
-                    try {
-                        if (!isset($_POST['name']) || empty($_POST['name'])) {
-                            $response = array("status" => 0, "message" => "Category name required");
-                            echo json_encode($response);
-                            exit();
-                        }
-                        $categoryName = $_POST['name'];
-                        $existingCategory = $entityManager->getRepository(Categories::class)->findOneBy(['categoryName' => $categoryName]);
-                        if ($existingCategory) {
-                            $response = array("status" => 0, "message" => "already in the database");
-                            echo json_encode($response);
-                            exit();
-                        }
-                        $category = new Categories();
-                        $category->setCategoryName($categoryName);
-                        $entityManager->persist($category);
-                        $entityManager->flush();
-                        $response = array("status" => 1, "message" => "Category added successfully", "data" => $category);
-                        echo json_encode($response);
-                    } catch (Exception $e) {
-                        $response = array("status" => 0, "message" => "An error occurred: " . $e->getMessage());
-                        echo json_encode($response);
-                    }
+                    $categoryName = $_POST['name'];
+                    $categoryRepository = $entityManager->getRepository(Categories::class);
+                    $newCategory = $categoryRepository->insertNewCategory($categoryName);
+                    echo json_encode($newCategory);
                     break;
 
                 case 'addProduct':
+                    if (!isset($_POST['name'], $_POST['year'], $_POST['price'])) {
+                        echo json_encode(array("status" => 0, "message" => "All fields are required"));
+                        exit();
+                    }
+
                     $productName = $_POST['name'];
                     $modelYear = $_POST['year'];
                     $listPrice = $_POST['price'];
@@ -322,72 +313,63 @@ switch ($method) {
                     $price = $_PUT['price'];
                     $year = $_PUT['year'];
 
-                    $brand = $entityManager->getRepository(Brands::class)->find($brandId);
-                    if (!$brand) {
-                        $response = array("status" => 0, "message" => "Brand not found");
-                        echo json_encode($response);
+                    // Assuming the updateProduct function is in the ProductRepository
+                    $productRepository = $entityManager->getRepository(Products::class);
+                    $result = $productRepository->updateProduct($productId, $productName, $brandId, $categoryId, $price, $year);
+
+                    if (isset($result['status']) && $result['status'] == 0) {
+                        echo json_encode($result);
                         exit();
                     }
 
-                    $category = $entityManager->getRepository(Categories::class)->find($categoryId);
-                    if (!$category) {
-                        $response = array("status" => 0, "message" => "Category not found");
-                        echo json_encode($response);
-                        exit();
-                    }
-
-                    $product = $entityManager->getRepository(Products::class)->find($productId);
-                    if (!$product) {
-                        $response = array("status" => 0, "message" => "Product not found");
-                        echo json_encode($response);
-                        exit();
-                    }
-
-                    $product->setProductName($productName);
-                    $product->setBrand($brand);
-                    $product->setCategory($category);
-                    $product->setListPrice($price);
-                    $product->setModelYear($year);
-                    $entityManager->flush();
-                    echo json_encode($product);
+                    echo json_encode($result);
                     break;
 
                 case 'updateBrand':
-                    if (!isset($_PUT['name']) || empty($_PUT['name'])) {
-                        $response = array("status" => 0, "message" => "Brand name is required");
+                    parse_str(file_get_contents("php://input"), $_PUT);
+
+                    if (!isset($_PUT['id']) || empty($_PUT['id']) || !isset($_PUT['name']) || empty($_PUT['name'])) {
+                        $response = array("status" => 0, "message" => "Brand id and name are required");
                         echo json_encode($response);
                         exit();
                     }
 
+                    $brandId = $_PUT['id'];
                     $brandName = $_PUT['name'];
-                    $brand = $entityManager->getRepository(Brands::class)->findOneBy(['brandName' => $brandName]);
-                    if (!$brand) {
-                        $response = array("status" => 0, "message" => "Brand not found");
-                        echo json_encode($response);
+                    $brandRepository = $entityManager->getRepository(Brands::class);
+                    $result = $brandRepository->updateBrand($brandId, $brandName);
+
+                    if (isset($result['status']) && $result['status'] == 0) {
+                        echo json_encode($result);
                         exit();
                     }
-                    $brand->setBrandName($brandName);
-                    $entityManager->flush();
-                    echo json_encode($brand);
+
+                    echo json_encode($result);
                     break;
 
                 case 'updateCategory':
-                    if (!isset($_PUT['name']) || empty($_PUT['name'])) {
-                        $response = array("status" => 0, "message" => "Category name is required");
+                    parse_str(file_get_contents("php://input"), $_PUT);
+
+                    if (
+                        !isset($_PUT['name']) || empty($_PUT['name']) ||
+                        !isset($_PUT['newName']) || empty($_PUT['newName'])
+                    ) {
+                        $response = array("status" => 0, "message" => "Category name and new name are required");
                         echo json_encode($response);
                         exit();
                     }
 
                     $categoryName = $_PUT['name'];
-                    $category = $entityManager->getRepository(Categories::class)->findOneBy(['categoryName' => $categoryName]);
-                    if (!$category) {
-                        $response = array("status" => 0, "message" => "Category not found");
-                        echo json_encode($response);
+                    $newCategoryName = $_PUT['newName'];
+                    $categoryRepository = $entityManager->getRepository(Categories::class);
+                    $result = $categoryRepository->updateCategory($categoryName, $newCategoryName);
+
+                    if (isset($result['status']) && $result['status'] == 0) {
+                        echo json_encode($result);
                         exit();
                     }
-                    $category->setCategoryName($categoryName);
-                    $entityManager->flush();
-                    echo json_encode($category);
+
+                    echo json_encode($result);
                     break;
 
                 case 'updateStore':
@@ -466,44 +448,46 @@ switch ($method) {
                     break;
 
                 case 'deleteProduct':
-                    if (!isset($_DELETE['name']) || empty($_DELETE['name'])) {
-                        $response = array("status" => 0, "message" => "Product name is required");
+                    parse_str(file_get_contents("php://input"), $_DELETE);
+                    if (!isset($_DELETE['id']) || empty($_DELETE['id'])) {
+                        $response = array("status" => 0, "message" => "Product ID is required");
                         echo json_encode($response);
                         exit();
                     }
 
-                    $productName = $_DELETE['name'];
-                    $product = $entityManager->getRepository(Products::class)->findOneBy(['productName' => $productName]);
-                    if (!$product) {
-                        $response = array("status" => 0, "message" => "Product not found");
-                        echo json_encode($response);
+                    $productId = $_DELETE['id'];
+
+                    // Assuming the deleteProduct function is in the ProductRepository
+                    $productRepository = $entityManager->getRepository(Products::class);
+                    $result = $productRepository->deleteProduct($productId);
+
+                    if (isset($result['status']) && $result['status'] == 0) {
+                        echo json_encode($result);
                         exit();
                     }
-                    $entityManager->remove($product);
-                    $entityManager->flush();
-                    echo json_encode(array("status" => 1, "message" => "Product deleted successfully"));
+
+                    echo json_encode($result);
                     break;
 
                 case 'deleteBrand':
-                    if (!isset($_DELETE['name']) || empty($_DELETE['name'])) {
-                        $response = array("status" => 0, "message" => "Brand name is required");
+                    parse_str(file_get_contents("php://input"), $_DELETE);
+
+                    if (!isset($_DELETE['id']) || empty($_DELETE['id'])) {
+                        $response = array("status" => 0, "message" => "Brand id is required");
                         echo json_encode($response);
                         exit();
                     }
 
-                    $brandName = $_DELETE['name'];
-                    $brand = $entityManager->getRepository(Brands::class)->findOneBy(['brandName' => $brandName]);
-                    if (!$brand) {
-                        $response = array("status" => 0, "message" => "Brand not found");
-                        echo json_encode($response);
-                        exit();
-                    }
-                    $entityManager->remove($brand);
-                    $entityManager->flush();
-                    echo json_encode(array("status" => 1, "message" => "Brand deleted successfully"));
+                    $brandId = $_DELETE['id'];
+                    $brandRepository = $entityManager->getRepository(Brands::class);
+                    $result = $brandRepository->deleteBrand($brandId);
+
+                    echo json_encode($result);
                     break;
 
                 case 'deleteCategory':
+                    parse_str(file_get_contents("php://input"), $_DELETE);
+
                     if (!isset($_DELETE['name']) || empty($_DELETE['name'])) {
                         $response = array("status" => 0, "message" => "Category name is required");
                         echo json_encode($response);
@@ -511,15 +495,11 @@ switch ($method) {
                     }
 
                     $categoryName = $_DELETE['name'];
-                    $category = $entityManager->getRepository(Categories::class)->findOneBy(['categoryName' => $categoryName]);
-                    if (!$category) {
-                        $response = array("status" => 0, "message" => "Category not found");
-                        echo json_encode($response);
-                        exit();
-                    }
-                    $entityManager->remove($category);
-                    $entityManager->flush();
-                    echo json_encode(array("status" => 1, "message" => "Category deleted successfully"));
+                    $categoryRepository = $entityManager->getRepository(Categories::class);
+                    $result = $categoryRepository->deleteCategory($categoryName);
+
+                    echo json_encode($result);
+
                     break;
             }
         }

@@ -11,7 +11,7 @@ use Entity\Categories;
 use JsonSerializable;
 
 /**
- * @ORM\Entity(repositoryClass="Repository\ProductRepository::class")
+ * @ORM\Entity(repositoryClass="Repository\ProductRepository")
  * @ORM\Table(name="Products")
  */
 
