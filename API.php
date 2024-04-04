@@ -373,17 +373,15 @@ switch ($method) {
 
                     $storeId = $_PUT['id'];
                     $storeName = $_PUT['name'];
-                    $storeAddress = $_PUT['address'];
-                    $store = $entityManager->getRepository(Stores::class)->find($storeId);
-                    if (!$store) {
-                        $response = array("status" => 0, "message" => "Store not found");
-                        echo json_encode($response);
-                        exit();
-                    }
-                    $store->setStoreName($storeName);
-                    $store->setStoreAddress($storeAddress);
-                    $entityManager->flush();
-                    echo json_encode($store);
+                    $storeZip = $_PUT['zip'];
+                    $storeCity = $_PUT['city'];
+                    $storeStreet = $_PUT['street'];
+                    $storeState = $_PUT['state'];
+
+                    $storesRepository = $entityManager->getRepository(Stores::class);
+                    $response = $storesRepository->updateStore($storeId, $storeName, $storeZip, $storeCity, $storeStreet, $storeState);
+
+                    echo json_encode($response);
                     break;
             }
         }
