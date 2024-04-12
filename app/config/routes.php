@@ -1,6 +1,8 @@
 <?php
 
-use Controller\BrandController;
+require_once __DIR__ . "/../bootstrap.php";
+
+use App\Controller\BrandController;
 
 $brandController = new BrandController($entityManager);
 
