@@ -1,5 +1,4 @@
 <?php
-require_once __DIR__ . "/../Router.php";
 
 use Controller\BrandController;
 
@@ -16,9 +15,9 @@ return [
     ],
     [
         'method' => 'GET',
-        'path' => '/brands/{id}',
+        'path' => '/brands/(?P<brandName>\w+)',
         'controller' => $brandController,
-        'action' => 'getBrand'
+        'action' => 'findProductsByBrandName'
     ],
     [
         'method' => 'POST',
@@ -28,14 +27,14 @@ return [
     ],
     [
         'method' => 'PUT',
-        'path' => '/brands/{id}',
+        'path' => '/brands/update/(?P<brandId>\d+)',
         'controller' => $brandController,
         'action' => 'updateBrand'
     ],
     [
         'method' => 'DELETE',
-        'path' => '/brands/{id}',
+        'path' => '/brands/delete/(?P<brandId>\d+)',
         'controller' => $brandController,
-        'action' => 'deleteBrand',
-    ]
+        'action' => 'deleteBrand'
+    ],
 ];

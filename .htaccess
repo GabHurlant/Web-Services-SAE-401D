@@ -1,5 +1,10 @@
-Allow From All
-Satisfy Any
+Require all granted
 
 Options FollowSymLinks
+
 RewriteEngine On
+
+# Route pour getAllBrands
+RewriteRule ^(brands|store|products|categories|employees)$ /index.php?path=$1 [L]
+RewriteRule ^brands/(\d+)$ /index.php?path=brands&id=$1 [L]
+RewriteRule ^brands/(\w+)/products$ /index.php?path=brands&brand=$1&resource=products [L]
