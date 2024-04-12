@@ -1,5 +1,7 @@
 <?php
 
+namespace Controller;
+
 use Doctrine\ORM\EntityManager;
 use Entity\Brands;
 
