@@ -56,6 +56,10 @@ class ComposerStaticInit0e657f65c1860401967558dd115291e2
             'Doctrine\\Common\\Annotations\\' => 28,
             'Doctrine\\Common\\' => 16,
         ),
+        'A' => 
+        array (
+            'App\\' => 4,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -169,13 +173,13 @@ class ComposerStaticInit0e657f65c1860401967558dd115291e2
         ),
         'Doctrine\\Common\\' => 
         array (
-            0 => __DIR__ . '/..' . '/doctrine/event-manager/src',
-            1 => __DIR__ . '/..' . '/doctrine/common/src',
+            0 => __DIR__ . '/..' . '/doctrine/common/src',
+            1 => __DIR__ . '/..' . '/doctrine/event-manager/src',
         ),
-    );
-
-    public static $fallbackDirsPsr0 = array (
-        0 => __DIR__ . '/../..' . '/src',
+        'App\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/src',
+        ),
     );
 
     public static $classMap = array (
@@ -194,7 +198,6 @@ class ComposerStaticInit0e657f65c1860401967558dd115291e2
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit0e657f65c1860401967558dd115291e2::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit0e657f65c1860401967558dd115291e2::$prefixDirsPsr4;
-            $loader->fallbackDirsPsr0 = ComposerStaticInit0e657f65c1860401967558dd115291e2::$fallbackDirsPsr0;
             $loader->classMap = ComposerStaticInit0e657f65c1860401967558dd115291e2::$classMap;
 
         }, null, ClassLoader::class);
