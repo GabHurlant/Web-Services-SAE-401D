@@ -1,7 +1,5 @@
 Require all granted
-
 Options FollowSymLinks
-
 DirectoryIndex doc.php
 
 RewriteEngine On
