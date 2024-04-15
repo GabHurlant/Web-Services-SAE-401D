@@ -2,7 +2,10 @@ Require all granted
 
 Options FollowSymLinks
 
+DirectoryIndex doc.php
+
 RewriteEngine On
 
 # Get all
 RewriteRule ^(brands|stores|products|employees|categories|stocks)$ index.php [L]
+
