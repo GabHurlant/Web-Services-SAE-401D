@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 
-use Entity\Brands;
+use App\Entity\Brands;
 
 class BrandController
 {

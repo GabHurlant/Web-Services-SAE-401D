@@ -1,5 +1,6 @@
 <?php
 // src/Repository/BrandRepository.class.php
+
 namespace Repository;
 
 use Doctrine\ORM\EntityRepository;

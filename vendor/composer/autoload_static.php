@@ -36,11 +36,19 @@ class ComposerStaticInit0e657f65c1860401967558dd115291e2
             'Symfony\\Component\\Console\\' => 26,
             'Symfony\\Component\\Cache\\' => 24,
         ),
+        'R' => 
+        array (
+            'Repository\\' => 11,
+        ),
         'P' => 
         array (
             'Psr\\Log\\' => 8,
             'Psr\\Container\\' => 14,
             'Psr\\Cache\\' => 10,
+        ),
+        'E' => 
+        array (
+            'Entity\\' => 7,
         ),
         'D' => 
         array (
@@ -119,6 +127,10 @@ class ComposerStaticInit0e657f65c1860401967558dd115291e2
         array (
             0 => __DIR__ . '/..' . '/symfony/cache',
         ),
+        'Repository\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/src/Repository',
+        ),
         'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/Psr/Log',
@@ -130,6 +142,10 @@ class ComposerStaticInit0e657f65c1860401967558dd115291e2
         'Psr\\Cache\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/cache/src',
+        ),
+        'Entity\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/app/src/Entity',
         ),
         'Doctrine\\Persistence\\' => 
         array (
