@@ -178,7 +178,7 @@ class Employees implements JsonSerializable
         return $this;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return [
             'employee_id' => $this->employee_id,

@@ -90,7 +90,7 @@ class Brands implements JsonSerializable
         return $this;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         return [
             'brand_id' => $this->brand_id,

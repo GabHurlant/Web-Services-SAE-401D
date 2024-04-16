@@ -11,7 +11,7 @@ return [
     //class brand
     [
         'method' => 'GET',
-        'path' => '/brands',
+        'path' => '/bikestores/brands',
         'controller' => $brandController,
         'action' => 'getAllBrands'
     ],
@@ -23,7 +23,7 @@ return [
     ],
     [
         'method' => 'POST',
-        'path' => '/brands',
+        'path' => '/brands/add',
         'controller' => $brandController,
         'action' => 'createBrand'
     ],

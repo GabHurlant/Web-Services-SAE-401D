@@ -16,12 +16,13 @@ class BrandController
     }
 
     // method get
+
     public function getAllBrands()
     {
-        $this->brandRepository = $this->entityManager->getRepository(Brands::class);
-        $brands = $this->brandRepository->findAll();
+        $brands = $this->entityManager->getRepository(Brands::class)->findAll();
         echo json_encode($brands);
     }
+
 
 
     public function findProductsByBrandName($brandName)

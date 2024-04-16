@@ -211,7 +211,7 @@ class Products implements JsonSerializable
         return $this;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): mixed
     {
         $stocks = $this->getStocks();
         return [

@@ -24,7 +24,7 @@ class Router
             }
         }
         //if no route
-        http_response_code(404);
-        echo '404 Not Found';
+        header('HTTP/1.0 404 Not Found');
+        echo '404 - Not Found';
     }
 }
