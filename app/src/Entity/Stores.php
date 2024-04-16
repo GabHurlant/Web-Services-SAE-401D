@@ -281,7 +281,7 @@ class Stores implements JsonSerializable
         return $this;
     }
 
-    public function jsonSerialize(): mixed
+    public function jsonSerialize()
     {
         return [
             'store_id' => $this->store_id,

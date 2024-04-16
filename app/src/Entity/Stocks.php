@@ -129,7 +129,7 @@ class Stocks implements JsonSerializable
         return $this;
     }
 
-    public function jsonSerialize(): mixed
+    public function jsonSerialize()
     {
         return [
             'stock_id' => $this->stock_id,

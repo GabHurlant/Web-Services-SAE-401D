@@ -89,7 +89,7 @@ class Categories implements JsonSerializable
         return $this;
     }
 
-    public function jsonSerialize(): mixed
+    public function jsonSerialize()
     {
         return [
             'category_id' => $this->category_id,

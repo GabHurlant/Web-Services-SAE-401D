@@ -20,6 +20,7 @@ class BrandController
     public function getAllBrands()
     {
         $brands = $this->entityManager->getRepository(Brands::class)->findAll();
+        header('Content-Type: application/json');
         echo json_encode($brands);
     }
 
@@ -39,10 +40,7 @@ class BrandController
                     'brand' => $product->getBrand()->getBrandName(),
                     'category' => $product->getCategory()->getCategoryName(),
                     'year' => $product->getModelYear(),
-                    'price' => $product->getListPrice(),
-                    'stock' => array_map(function ($stock) {
-                        return $stock->jsonSerialize();
-                    }, $product->getStocks()->toArray()),
+                    'price' => $product->getListPrice()
                 ];
             }
             header('Content-Type: application/json');

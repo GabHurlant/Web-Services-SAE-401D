@@ -17,7 +17,7 @@ return [
     ],
     [
         'method' => 'GET',
-        'path' => '/brands/(?P<brandName>\w+)',
+        'path' => '/bikestores/brands/(?P<brandName>\w+)',
         'controller' => $brandController,
         'action' => 'findProductsByBrandName'
     ],

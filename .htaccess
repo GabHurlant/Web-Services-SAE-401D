@@ -6,3 +6,5 @@ RewriteEngine On
 
 # Get all
 RewriteRule ^(brands|stores|products|employees|categories|stocks)$ index.php [L]
+
+RewriteRule ^brands/([a-zA-Z0-9_-]+)$ index.php?brandName=$1 [QSA,L]
