@@ -1,15 +1,15 @@
 <?php
 //src/Entity/Stocks.php
 
-namespace Entity;
+namespace App\Entity;
 
-use Entity\Products;
-use Entity\Stores;
+use App\Entity\Products;
+use App\Entity\Stores;
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
 /**
- * @ORM\Entity(repositoryClass="Repository\StockRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\StockRepository")
  * @ORM\Table(name="Stocks")
  */
 

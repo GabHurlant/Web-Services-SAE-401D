@@ -8,10 +8,7 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "app/src/",
-            "Entity\\": "app/src/Entity/",
-            "Repository\\": "app/src/Repository/"
-
+            "App\\": "app/src/"
         }
     },
     "config": {

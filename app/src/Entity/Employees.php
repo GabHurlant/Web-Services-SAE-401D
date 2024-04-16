@@ -2,13 +2,13 @@
 
 // src/Entity/Employees.php
 
-namespace Entity;
+namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
 
 /**
- * @ORM\Entity(repositoryClass="Repository\EmployeeRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\EmployeeRepository")
  * @ORM\Table(name="Employees")
  */
 
