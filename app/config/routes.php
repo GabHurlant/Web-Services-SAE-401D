@@ -23,7 +23,7 @@ return [
     ],
     [
         'method' => 'POST',
-        'path' => '/brands/add',
+        'path' => '/brands/create',
         'controller' => $brandController,
         'action' => 'createBrand'
     ],
