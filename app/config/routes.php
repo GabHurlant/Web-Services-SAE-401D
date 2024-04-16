@@ -23,19 +23,19 @@ return [
     ],
     [
         'method' => 'POST',
-        'path' => '/brands/create',
+        'path' => '/bikestores/brands/create',
         'controller' => $brandController,
         'action' => 'createBrand'
     ],
     [
         'method' => 'PUT',
-        'path' => '/brands/update/(?P<brandId>\d+)',
+        'path' => '/bikestores/brands/update/(?P<brandId>\d+)',
         'controller' => $brandController,
         'action' => 'updateBrand'
     ],
     [
         'method' => 'DELETE',
-        'path' => '/brands/delete/(?P<brandId>\d+)',
+        'path' => '/bikestores/brands/delete/(?P<brandId>\d+)',
         'controller' => $brandController,
         'action' => 'deleteBrand'
     ],
