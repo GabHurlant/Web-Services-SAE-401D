@@ -19,42 +19,36 @@ class Employees implements JsonSerializable
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
-     * @OA\Property(description="The unique identifier of the employee.")
      */
     private int $employee_id;
 
     /**
      * @ORM\ManyToOne(targetEntity=Stores::class, inversedBy="employees")
      * @ORM\JoinColumn(name="store_id", referencedColumnName="store_id")
-     * @OA\Property(description="The store associated with this employee.")
      */
     private $store;
 
     /**
      * @var string
      * @ORM\Column(type="string")
-     * @OA\Property(description="The name of the employee.")
      */
     private string $employee_name;
 
     /**
      * @var string
      * @ORM\Column(type="string")
-     * @OA\Property(description="The email of the employee.")
      */
     private string $employee_email;
 
     /**
      * @var string
      * @ORM\Column(type="string")
-     * @OA\Property(description="The password of the employee.")
      */
     private string $employee_password;
 
     /**
      * @var string
      * @ORM\Column(type="string")
-     * @OA\Property(description="The role of the employee.")
      */
     private string $employee_role;
 
@@ -174,11 +168,7 @@ class Employees implements JsonSerializable
         return $this;
     }
 
-    /**
-     * Specify data which should be serialized to JSON
-     * @return array
-     */
-    public function jsonSerialize(): array
+    public function jsonSerialize()
     {
         return [
             'employee_id' => $this->employee_id,

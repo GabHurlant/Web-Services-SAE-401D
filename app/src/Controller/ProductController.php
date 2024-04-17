@@ -35,25 +35,6 @@ class ProductController
 
     /**
      * Get all products
-     *
-     * @OA\Get(
-     *     path="/bikestores/products",
-     *     tags={"Products"},
-     *     summary="Get all products",
-     *     operationId="getAllProducts",
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful operation",
-     *         @OA\JsonContent(
-     *             type="array",
-     *             @OA\Items(ref="#/components/schemas/Product")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Products not found"
-     *     )
-     * )
      */
     public function getAllProducts()
     {
@@ -64,29 +45,7 @@ class ProductController
 
     /**
      * Get a product by ID
-     *
-     * @OA\Get(
-     *     path="/bikestores/products/{productId}",
-     *     tags={"Products"},
-     *     summary="Get a product by ID",
-     *     operationId="getProduct",
-     *     @OA\Parameter(
-     *         name="productId",
-     *         in="path",
-     *         required=true,
-     *         description="ID of the product to retrieve",
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful operation",
-     *         @OA\JsonContent(ref="#/components/schemas/Product")
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Product not found"
-     *     )
-     * )
+     * @param mixed $productId
      */
     public function getProduct($productId)
     {
@@ -99,33 +58,6 @@ class ProductController
 
     /**
      * Create a new product
-     *
-     * @OA\Post(
-     *     path="/bikestores/products/create",
-     *     tags={"Products"},
-     *     summary="Create a new product",
-     *     operationId="createProduct",
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             required={"productName", "brandId", "categoryId", "modelYear", "productPrice"},
-     *             @OA\Property(property="productName", type="string"),
-     *             @OA\Property(property="brandId", type="integer"),
-     *             @OA\Property(property="categoryId", type="integer"),
-     *             @OA\Property(property="modelYear", type="integer"),
-     *             @OA\Property(property="productPrice", type="number", format="float"),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Product created",
-     *         @OA\JsonContent(ref="#/components/schemas/Product")
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Invalid API Key or missing required fields"
-     *     )
-     * )
      */
 
     public function createProduct()
@@ -165,39 +97,8 @@ class ProductController
 
     /**
      * Update an existing product
-     *
-     * @OA\Put(
-     *     path="/bikestores/products/update/{productId}",
-     *     tags={"Products"},
-     *     summary="Update an existing product",
-     *     operationId="updateProduct",
-     *     @OA\Parameter(
-     *         name="productId",
-     *         in="path",
-     *         required=true,
-     *         description="ID of the product to update",
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             @OA\Property(property="productName", type="string"),
-     *             @OA\Property(property="brandId", type="integer"),
-     *             @OA\Property(property="categoryId", type="integer"),
-     *             @OA\Property(property="modelYear", type="integer"),
-     *             @OA\Property(property="productPrice", type="number", format="float"),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Product updated",
-     *         @OA\JsonContent(ref="#/components/schemas/Product")
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Invalid API Key or missing required fields"
-     *     )
-     * )
+     * @param array $params
+     * @return Products|null
      */
     public function updateProduct($params)
     {
@@ -258,29 +159,7 @@ class ProductController
 
     /**
      * Delete a product
-     *
-     * @OA\Delete(
-     *     path="/bikestores/products/delete/{productId}",
-     *     tags={"Products"},
-     *     summary="Delete an existing product",
-     *     operationId="deleteProduct",
-     *     @OA\Parameter(
-     *         name="productId",
-     *         in="path",
-     *         required=true,
-     *         description="ID of the product to delete",
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Product deleted",
-     *         @OA\JsonContent(ref="#/components/schemas/Product")
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Invalid API Key"
-     *     )
-     * )
+     * @param array $params
      */
     public function deleteProduct($params)
     {

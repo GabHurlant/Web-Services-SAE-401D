@@ -21,68 +21,58 @@ class Stores implements JsonSerializable
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
-     * @OA\Property(description="The unique identifier of the store.")
      */
     private int $store_id;
 
     /**
      * @var string
      * @ORM\Column(type="string")
-     * @OA\Property(description="The name of the store.")
      */
     private string $store_name;
 
     /**
      * @var string
      * @ORM\Column(type="string")
-     * @OA\Property(description="The phone number of the store.")
      */
     private string $phone;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=25)
-     * @OA\Property(description="The email address of the store.")
      */
     private string $email;
 
     /**
      * @var string
      * @ORM\Column(type="string")
-     * @OA\Property(description="The street address of the store.")
      */
     private string $street;
 
     /**
      * @var string
      * @ORM\Column(type="string")
-     * @OA\Property(description="The city of the store.")
      */
     private string $city;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=10)
-     * @OA\Property(description="The state of the store.")
      */
     private string $state;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=5)
-     * @OA\Property(description="The ZIP code of the store.")
      */
     private string $zip_code;
 
     /**
      * @ORM\OneToMany(targetEntity=Stocks::class, mappedBy="store")
-     * @OA\Property(description="The stocks associated with this store.")
      */
     private Collection $stocks;
 
     /**
      * @ORM\OneToMany(targetEntity=Employees::class, mappedBy="store")
-     * @OA\Property(description="The employees associated with this store.")
      */
     private Collection $employees;
 

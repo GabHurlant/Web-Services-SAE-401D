@@ -34,25 +34,6 @@ class EmployeeController
 
     /**
      * Get all employees
-     *
-     * @OA\Get(
-     *     path="/bikestores/employees",
-     *     tags={"Employees"},
-     *     summary="Get all employees",
-     *     operationId="getAllEmployees",
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful operation",
-     *         @OA\JsonContent(
-     *             type="array",
-     *             @OA\Items(ref="#/components/schemas/Employee")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Employees not found"
-     *     )
-     * )
      */
 
     public function getAllEmployees()
@@ -66,36 +47,6 @@ class EmployeeController
 
     /**
      * Add a new employee
-     *
-     * @OA\Post(
-     *     path="/bikestores/employees/create",
-     *     tags={"Employees"},
-     *     summary="Add a new employee",
-     *     operationId="addEmployee",
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             required={"employee_name", "employee_email", "employee_password", "employee_role", "store_id"},
-     *             @OA\Property(property="employee_name", type="string"),
-     *             @OA\Property(property="employee_email", type="string"),
-     *             @OA\Property(property="employee_password", type="string"),
-     *             @OA\Property(property="employee_role", type="string"),
-     *             @OA\Property(property="store_id", type="integer"),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Employee added successfully",
-     *         @OA\JsonContent(
-     *             type="array",
-     *             @OA\Items(ref="#/components/schemas/Employee")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Invalid API Key or missing required fields"
-     *     )
-     * )
      */
     public function addEmployee()
     {
@@ -136,42 +87,8 @@ class EmployeeController
 
     /**
      * Update an existing employee
-     *
-     * @OA\Put(
-     *     path="/bikestores/employees/update/{employeeId}",
-     *     tags={"Employees"},
-     *     summary="Update an existing employee",
-     *     operationId="updateEmployee",
-     *     @OA\Parameter(
-     *         name="employeeId",
-     *         in="path",
-     *         required=true,
-     *         description="ID of the employee to update",
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             @OA\Property(property="employee_name", type="string"),
-     *             @OA\Property(property="store_id", type="integer"),
-     *             @OA\Property(property="employee_email", type="string"),
-     *             @OA\Property(property="employee_password", type="string"),
-     *             @OA\Property(property="employee_role", type="string"),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Employee updated",
-     *         @OA\JsonContent(
-     *             type="array",
-     *             @OA\Items(ref="#/components/schemas/Employee")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Invalid API Key or missing required fields"
-     *     )
-     * )
+     * @param array $params
+     * @return Employees|null
      */
     public function updateEmployee($params)
     {
@@ -228,32 +145,7 @@ class EmployeeController
 
     /**
      * Delete an employee
-     *
-     * @OA\Delete(
-     *     path="/bikestores/employees/delete/{employeeId}",
-     *     tags={"Employees"},
-     *     summary="Delete an existing employee",
-     *     operationId="deleteEmployee",
-     *     @OA\Parameter(
-     *         name="employeeId",
-     *         in="path",
-     *         required=true,
-     *         description="ID of the employee to delete",
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Employee deleted",
-     *         @OA\JsonContent(
-     *             type="array",
-     *             @OA\Items(ref="#/components/schemas/Employee")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Invalid API Key"
-     *     )
-     * )
+     * @param array $params
      */
     public function deleteEmployee($params)
     {

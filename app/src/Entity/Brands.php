@@ -21,14 +21,12 @@ class Brands implements JsonSerializable
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
-     * @OA\Property(description="The unique identifier of the brand.")
      */
     private int $brand_id;
 
     /** 
      * @var string 
      * @ORM\Column(type="string")
-     * @OA\Property(description="The name of the brand.")
      */
     private string $brand_name;
 
@@ -78,15 +76,6 @@ class Brands implements JsonSerializable
         return $this;
     }
 
-    /**
-     * Get the collection of products associated with this brand.
-     *
-     * @return Collection
-     * @OA\Property(
-     *     description="The collection of products associated with this brand.",
-     *     @OA\Items(ref="#/components/schemas/Product")
-     * )
-     */
     public function getProducts(): Collection
     {
         return $this->products;
@@ -98,11 +87,7 @@ class Brands implements JsonSerializable
         return $this;
     }
 
-    /**
-     * Specify data which should be serialized to JSON
-     * @return array
-     */
-    public function jsonSerialize(): array
+    public function jsonSerialize()
     {
         return [
             'brand_id' => $this->brand_id,

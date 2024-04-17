@@ -34,26 +34,6 @@ class CategoriesController
     /**
      * Get a specific category
      * @param mixed $categoryId
-     *
-     * @OA\Get(
-     *     path="/bikestores/categories/{categoryId}",
-     *     summary="Get a specific category",
-     *     @OA\Parameter(
-     *         name="categoryId",
-     *         in="path",
-     *         description="ID of the category",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="integer",
-     *             format="int64"
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful operation",
-     *         @OA\JsonContent(ref="#/components/schemas/Categories")
-     *     )
-     * )
      */
     public function getCategory($categoryId)
     {
@@ -66,16 +46,6 @@ class CategoriesController
 
     /**
      * Get all categories
-     *
-     * @OA\Get(
-     *     path="/bikestores/categories",
-     *     summary="Get all categories",
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful operation",
-     *         @OA\JsonContent(ref="#/components/schemas/Categories")
-     *     )
-     * )
      */
     public function getAllCategories()
     {
@@ -84,23 +54,36 @@ class CategoriesController
         echo json_encode($categories);
     }
 
+
+    // public function findProductsByCategoryName($categoryName)
+    // {
+    //     $categoryName = urldecode($categoryName);
+    //     $category = $this->categoryRepository->findOneBy(['category_name' => $categoryName]);
+    //     if ($category) {
+    //         $products = $category->getProducts()->toArray();
+    //         $productData = [];
+    //         foreach ($products as $product) {
+    //             $productData[] = [
+    //                 'id' => $product->getProductId(),
+    //                 'name' => $product->getProductName(),
+    //                 'brand' => $product->getBrand()->getBrandName(),
+    //                 'category' => $product->getCategory()->getCategoryName(),
+    //                 'year' => $product->getModelYear(),
+    //                 'price' => $product->getListPrice()
+    //             ];
+    //         }
+    //         
+    //         echo json_encode($productData);
+    //     } else {
+    //         
+    //         echo json_encode(["error" => "Category not found"]);
+    //     }
+    // }
+
+
     /**
      * Create a new category
      * @param string $categoryName
-     *
-     * @OA\Post(
-     *     path="/bikestores/categories/create",
-     *     summary="Create a new category",
-     *     @OA\RequestBody(
-     *         required=true,
-     *         description="Category object to be created",
-     *         @OA\JsonContent(ref="#/components/schemas/Categories")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Category created successfully"
-     *     )
-     * )
      */
     public function createCategory($categoryName)
     {
@@ -122,34 +105,11 @@ class CategoriesController
         }
     }
 
+
     /**
      * Update an existing category
      * @param array $params
      * @return Categories|null
-     *
-     * @OA\Put(
-     *     path="/bikestores/categories/update/{categoryId}",
-     *     summary="Update an existing category",
-     *     @OA\Parameter(
-     *         name="categoryId",
-     *         in="path",
-     *         description="ID of the category",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="integer",
-     *             format="int64"
-     *         )
-     *     ),
-     *     @OA\RequestBody(
-     *         required=true,
-     *         description="Category object to be updated",
-     *         @OA\JsonContent(ref="#/components/schemas/Categories")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Category updated successfully"
-     *     )
-     * )
      */
     public function updateCategory($params)
     {
@@ -181,28 +141,10 @@ class CategoriesController
         }
     }
 
+
     /**
      * Delete a category
      * @param array $params
-     *
-     * @OA\Delete(
-     *     path="/bikestores/categories/delete/{categoryId}",
-     *     summary="Delete a category",
-     *     @OA\Parameter(
-     *         name="categoryId",
-     *         in="path",
-     *         description="ID of the category",
-     *         required=true,
-     *         @OA\Schema(
-     *             type="integer",
-     *             format="int64"
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Category deleted successfully"
-     *     )
-     * )
      */
     public function deleteCategory($params)
     {
