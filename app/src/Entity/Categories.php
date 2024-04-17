@@ -21,17 +21,23 @@ class Categories implements JsonSerializable
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
+     * @OA\Property(description="The unique identifier of the category.")
      */
     private int $category_id;
 
     /** 
      * @var string 
      * @ORM\Column(type="string")
+     * @OA\Property(description="The name of the category.")
      */
     private string $category_name;
 
     /**
      * @ORM\OneToMany(targetEntity=Products::class, mappedBy="category")
+     * @OA\Property(
+     *     description="The collection of products associated with this category.",
+     *     @OA\Items(ref="#/components/schemas/Product")
+     * )
      */
     private Collection $products;
 
@@ -76,18 +82,33 @@ class Categories implements JsonSerializable
         return $this;
     }
 
+    /**
+     * Get the collection of products associated with this category.
+     *
+     * @return Collection
+     */
     public function getProducts(): Collection
     {
         return $this->products;
     }
 
+    /**
+     * Set the collection of products associated with this category.
+     *
+     * @param Collection $products
+     * @return self
+     */
     public function setProducts(Collection $products): self
     {
         $this->products = $products;
         return $this;
     }
 
-    public function jsonSerialize()
+    /**
+     * Specify data which should be serialized to JSON
+     * @return array
+     */
+    public function jsonSerialize(): array
     {
         return [
             'category_id' => $this->category_id,

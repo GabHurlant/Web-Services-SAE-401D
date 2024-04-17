@@ -23,42 +23,49 @@ class Products implements JsonSerializable
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
+     * @OA\Property(description="The unique identifier of the product.")
      */
     private int $product_id;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @OA\Property(description="The name of the product.")
      */
     private string $product_name;
 
     /**
      * @ORM\ManyToOne(targetEntity=Brands::class, inversedBy="products")
      * @ORM\JoinColumn(name="brand_id", referencedColumnName="brand_id")
+     * @OA\Property(description="The brand associated with this product.")
      */
     private $brands;
 
     /**
      * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="products", cascade={"persist"})
      * @ORM\JoinColumn(name="category_id", referencedColumnName="category_id")
+     * @OA\Property(description="The category associated with this product.")
      */
     private Categories $category;
 
     /**
      * @var int
      * @ORM\Column(type="integer")
+     * @OA\Property(description="The model year of the product.")
      */
     private int $model_year;
 
     /**
      * @var string
      * @ORM\Column(type="decimal", precision=10, scale=2)
+     * @OA\Property(description="The list price of the product.")
      */
     private string $list_price;
 
     /**
      * @ORM\OneToMany(targetEntity=Stocks::class, mappedBy="product")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="product_id")
+     * @OA\Property(description="The stocks associated with this product.")
      */
     private  Collection $stocks;
 
@@ -203,7 +210,11 @@ class Products implements JsonSerializable
         return $this;
     }
 
-    public function jsonSerialize()
+    /**
+     * Specify data which should be serialized to JSON
+     * @return array
+     */
+    public function jsonSerialize(): array
     {
         $stocks = $this->getStocks();
         return [

@@ -21,24 +21,28 @@ class Stocks implements JsonSerializable
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
+     * @OA\Property(description="The unique identifier of the stock.")
      */
     private int $stock_id;
 
     /**
      * @ORM\ManyToOne(targetEntity=Stores::class, inversedBy="stocks")
      * @ORM\JoinColumn(name="store_id", referencedColumnName="store_id")
+     * @OA\Property(description="The store associated with this stock.")
      */
     private $store;
 
     /**
      * @ORM\ManyToOne(targetEntity=Products::class, inversedBy="stocks")
      * @ORM\JoinColumn(name="product_id", referencedColumnName="product_id")
+     * @OA\Property(description="The product associated with this stock.")
      */
     private $product;
 
     /**
      * @var int
      * @ORM\Column(type="integer")
+     * @OA\Property(description="The quantity of the product in stock.")
      */
     private int $quantity;
 
@@ -118,7 +122,11 @@ class Stocks implements JsonSerializable
         return $this;
     }
 
-    public function jsonSerialize()
+    /**
+     * Specify data which should be serialized to JSON
+     * @return array
+     */
+    public function jsonSerialize(): array
     {
         return [
             'stock_id' => $this->stock_id,
