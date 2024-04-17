@@ -4,21 +4,36 @@ namespace App\Controller;
 
 use Doctrine\ORM\EntityManager;
 use App\Entity\Stores;
-use Repository\StoreRepository;
+use App\Repository\StoreRepository;
 
+/**
+ * Class StoreController
+ * @package App\Controller
+ */
 class StoreController
 {
+    /** @var StoreRepository */
     private $storeRepository;
+
+    /** @var EntityManager */
     private $entityManager;
 
+    /** @var string */
     const API_KEY = 'e8f1997c763';
 
+    /**
+     * StoreController constructor.
+     * @param EntityManager $entityManager
+     */
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
         $this->storeRepository = $entityManager->getRepository(Stores::class);
     }
 
+    /**
+     * Get all stores
+     */
     public function getStores()
     {
         $stores = $this->storeRepository->findAll();
@@ -26,6 +41,7 @@ class StoreController
         echo json_encode($stores);
     }
 
+    // Uncomment to enable this method
     // public function getEmployeesByStoreId($storeName)
     // {
     //     $employees = $this->storeRepository->getEmployeesByStoreName($storeName);
@@ -35,7 +51,9 @@ class StoreController
     //     return $employees['data'];
     // }
 
-
+    /**
+     * Create a new store
+     */
     public function createStore()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['storeName']) && isset($_POST['storeZip']) && isset($_POST['storeCity']) && isset($_POST['storeStreet']) && isset($_POST['storeState']) && isset($_POST['phone']) && isset($_POST['email'])) {
@@ -72,6 +90,11 @@ class StoreController
         }
     }
 
+    /**
+     * Update an existing store
+     * @param array $params
+     * @return Stores|null
+     */
     public function updateStore($params)
     {
         $storeId = $params['storeId'];

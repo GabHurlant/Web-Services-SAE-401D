@@ -5,20 +5,36 @@ namespace App\Controller;
 use Doctrine\ORM\EntityManager;
 use App\Entity\Employees;
 use App\Entity\Stores;
-use Repository\EmployeeRepository;
+use App\Repository\EmployeeRepository;
 
+/**
+ * Class EmployeeController
+ * @package App\Controller
+ */
 class EmployeeController
 {
+    /** @var EmployeeRepository */
     private $employeeRepository;
+
+    /** @var EntityManager */
     private $entityManager;
 
+    /** @var string */
     const API_KEY = "e8f1997c763";
 
+    /**
+     * EmployeeController constructor.
+     * @param EntityManager $entityManager
+     */
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
         $this->employeeRepository = $entityManager->getRepository(Employees::class);
     }
+
+    /**
+     * Get all employees
+     */
 
     public function getAllEmployees()
     {
@@ -29,6 +45,9 @@ class EmployeeController
 
 
 
+    /**
+     * Add a new employee
+     */
     public function addEmployee()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['employee_name']) && isset($_POST['employee_email']) && isset($_POST['employee_password']) && isset($_POST['employee_role']) && isset($_POST['store_id'])) {
@@ -66,7 +85,11 @@ class EmployeeController
     }
 
 
-
+    /**
+     * Update an existing employee
+     * @param array $params
+     * @return Employees|null
+     */
     public function updateEmployee($params)
     {
         $employeeId = $params['employeeId'];
@@ -120,7 +143,10 @@ class EmployeeController
     }
 
 
-
+    /**
+     * Delete an employee
+     * @param array $params
+     */
     public function deleteEmployee($params)
     {
         $employeeId = $params['employeeId'];

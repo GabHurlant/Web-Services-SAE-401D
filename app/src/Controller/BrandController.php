@@ -2,21 +2,35 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Brands;
 
+/**
+ * Class BrandController
+ * @package App\Controller
+ */
 class BrandController
 {
+    /** @var mixed */
     private $entityManager;
+
+    /** @var mixed */
     private $brandRepository;
+
+    /** @var string */
     const API_KEY = "e8f1997c763";
+
+    /**
+     * BrandController constructor.
+     * @param mixed $entityManager
+     */
     public function __construct($entityManager)
     {
         $this->entityManager = $entityManager;
     }
 
-
-    // method get
+    /**
+     * Get all brands
+     */
 
     public function getAllBrands()
     {
@@ -26,7 +40,10 @@ class BrandController
     }
 
 
-
+    /**
+     * Find products by brand name
+     * @param string $brandName
+     */
     public function findProductsByBrandName($brandName)
     {
         $this->brandRepository = $this->entityManager->getRepository(Brands::class);
@@ -54,6 +71,11 @@ class BrandController
 
     // method post
 
+    /**
+     * Create a new brand
+     * @param string $brandName
+     * @return Brands|null
+     */
     public function createBrand($brandName)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['brandName'])) {
@@ -79,6 +101,11 @@ class BrandController
     }
 
     // method put
+    /**
+     * Update an existing brand
+     * @param array $params
+     * @return Brands|null
+     */
     public function updateBrand($params)
     {
         $brandId = $params['brandId'];
@@ -110,6 +137,11 @@ class BrandController
     }
 
     // method delete
+
+    /**
+     * Delete a brand
+     * @param array $params
+     */
     public function deleteBrand($params)
     {
         $brandId = $params['brandId'];

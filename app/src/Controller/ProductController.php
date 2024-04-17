@@ -8,20 +8,34 @@ use App\Entity\Brands;
 use App\Entity\Categories;
 use App\Repository\ProductRepository;
 
+/**
+ * Class ProductController
+ * @package App\Controller
+ */
 class ProductController
 {
+    /** @var ProductRepository */
     private $productRepository;
 
+    /** @var EntityManager */
     private $entityManager;
 
+    /** @var string */
     const API_KEY = 'e8f1997c763';
 
+    /**
+     * ProductController constructor.
+     * @param EntityManager $entityManager
+     */
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
         $this->productRepository = $entityManager->getRepository(Products::class);
     }
 
+    /**
+     * Get all products
+     */
     public function getAllProducts()
     {
         $products = $this->productRepository->findAll();
@@ -29,6 +43,10 @@ class ProductController
         echo json_encode($products);
     }
 
+    /**
+     * Get a product by ID
+     * @param mixed $productId
+     */
     public function getProduct($productId)
     {
         $productId = $productId['productId'];
@@ -37,6 +55,10 @@ class ProductController
         echo json_encode($product);
     }
 
+
+    /**
+     * Create a new product
+     */
 
     public function createProduct()
     {
@@ -73,6 +95,11 @@ class ProductController
         }
     }
 
+    /**
+     * Update an existing product
+     * @param array $params
+     * @return Products|null
+     */
     public function updateProduct($params)
     {
         $productId = $params['productId'];
@@ -130,6 +157,10 @@ class ProductController
         }
     }
 
+    /**
+     * Delete a product
+     * @param array $params
+     */
     public function deleteProduct($params)
     {
         $productId = $params['productId'];

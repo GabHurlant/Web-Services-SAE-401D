@@ -8,20 +8,36 @@ use App\Entity\Stores;
 use App\Entity\Products;
 use App\Repository\StockRepository;
 
+/**
+ * Class StockController
+ * @package App\Controller
+ */
 class StockController
 {
+    /** @var StockRepository */
     private $stockRepository;
 
+    /** @var EntityManager */
     private $entityManager;
 
+    /** @var string */
     const API_KEY = 'e8f1997c763';
 
+    /**
+     * StockController constructor.
+     * @param EntityManager $entityManager
+     */
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
         $this->stockRepository = $entityManager->getRepository(Stocks::class);
     }
 
+    /**
+     * Update stock information
+     * @param array $params
+     * @return Stocks|null
+     */
     public function updateStock($params)
     {
         $stockId = $params['stockId'];
@@ -40,8 +56,6 @@ class StockController
                 return;
             }
 
-
-
             if (isset($_PUT['storeId'])) {
                 $storeId = $_PUT['storeId'];
                 $store = $this->entityManager->getRepository(Stores::class)->find($storeId);
@@ -50,7 +64,6 @@ class StockController
                     return;
                 }
             }
-
 
             if (isset($_PUT['productId'])) {
                 $productId = $_PUT['productId'];
@@ -64,13 +77,12 @@ class StockController
             $quantity = $_PUT['quantity'];
             $stock->setQuantity($quantity);
 
-
             $this->entityManager->flush();
 
             echo json_encode(['success' => 'Stock updated']);
             return $stock;
         } else {
-            echo json_encode(["error" => "invalid request"]);
+            echo json_encode(["error" => "Invalid request"]);
         }
     }
 }
