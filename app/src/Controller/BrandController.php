@@ -85,7 +85,7 @@ class BrandController
         if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
             parse_str(file_get_contents('php://input'), $_PUT);
 
-            if (!isset($_POST["API_KEY"]) || $_POST['API_KEY'] !== self::API_KEY) {
+            if (!isset($_PUT["API_KEY"]) || $_PUT['API_KEY'] !== self::API_KEY) {
                 echo json_encode(["error" => "Invalid API Key"]);
                 return;
             }
