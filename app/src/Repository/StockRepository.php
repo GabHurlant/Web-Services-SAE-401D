@@ -1,5 +1,5 @@
 <?php
-// src/Repository/StockRepository.php
+
 namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
@@ -8,6 +8,11 @@ use App\Entity\Stocks;
 use App\Entity\Stores;
 use App\Entity\Products;
 
+/**
+ * Class StockRepository
+ * 
+ * Custom repository class for interacting with the Stocks entity.
+ */
 class StockRepository extends EntityRepository
 {
 }

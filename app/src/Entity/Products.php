@@ -1,5 +1,4 @@
 <?php
-//src/Entity/Products.php
 
 namespace App\Entity;
 
@@ -14,24 +13,23 @@ use JsonSerializable;
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
  * @ORM\Table(name="Products")
  */
-
 class Products implements JsonSerializable
 {
 
-    //déclaration des attributs & annotation doctrines
+    // Declaration of attributes & Doctrine annotations
 
-    /** @var int 
+    /**
+     * @var int
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      */
-
     private int $product_id;
 
-    /** @var string 
+    /**
+     * @var string
      * @ORM\Column(type="string")
      */
-
     private string $product_name;
 
     /**
@@ -40,20 +38,20 @@ class Products implements JsonSerializable
      */
     private $brands;
 
-
-    /** 
+    /**
      * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="products", cascade={"persist"})
      * @ORM\JoinColumn(name="category_id", referencedColumnName="category_id")
      */
     private Categories $category;
 
-    /** @var int
+    /**
+     * @var int
      * @ORM\Column(type="integer")
      */
-
     private int $model_year;
 
-    /** @var string
+    /**
+     * @var string
      * @ORM\Column(type="decimal", precision=10, scale=2)
      */
     private string $list_price;
@@ -74,10 +72,10 @@ class Products implements JsonSerializable
         return "Produit :{$this->product_id}, {$this->product_name}, {$this->brands}, {$this->category}, {$this->model_year}, {$this->list_price}";
     }
 
-    //getters & setters
+    // Getters and setters
 
     /**
-     * get product_id
+     * Get product_id
      * @return int
      */
     public function getProductId(): int
@@ -86,7 +84,7 @@ class Products implements JsonSerializable
     }
 
     /**
-     * get product_name
+     * Get product_name
      * @return string
      */
     public function getProductName(): string
@@ -95,7 +93,7 @@ class Products implements JsonSerializable
     }
 
     /**
-     * set product_name
+     * Set product_name
      * @param string $product_name
      * @return Products
      */
@@ -106,11 +104,7 @@ class Products implements JsonSerializable
     }
 
     /**
-     * get brand_id
-     * @return int
-     */
-    /**
-     * get brand
+     * Get brand
      * @return Brands
      */
     public function getBrand(): Brands
@@ -119,7 +113,7 @@ class Products implements JsonSerializable
     }
 
     /**
-     * set brand
+     * Set brand
      * @param Brands $brand
      * @return Products
      */
@@ -129,9 +123,8 @@ class Products implements JsonSerializable
         return $this;
     }
 
-
     /**
-     * get category
+     * Get category
      * @return Categories
      */
     public function getCategory(): Categories
@@ -140,7 +133,7 @@ class Products implements JsonSerializable
     }
 
     /**
-     * set category
+     * Set category
      * @param Categories $category
      * @return Products
      */
@@ -151,7 +144,7 @@ class Products implements JsonSerializable
     }
 
     /**
-     * get model_year
+     * Get model_year
      * @return int
      */
     public function getModelYear(): int
@@ -160,7 +153,7 @@ class Products implements JsonSerializable
     }
 
     /**
-     * set model_year
+     * Set model_year
      * @param int $model_year
      * @return Products
      */
@@ -170,9 +163,8 @@ class Products implements JsonSerializable
         return $this;
     }
 
-
-    /**  
-     * get list_price
+    /**
+     * Get list_price
      * @return string
      */
     public function getListPrice(): string
@@ -181,7 +173,7 @@ class Products implements JsonSerializable
     }
 
     /**
-     * set list_price
+     * Set list_price
      * @param string $list_price
      * @return Products
      */
@@ -192,7 +184,7 @@ class Products implements JsonSerializable
     }
 
     /**
-     * get stocks
+     * Get stocks
      * @return Collection
      */
     public function getStocks(): Collection
@@ -201,7 +193,7 @@ class Products implements JsonSerializable
     }
 
     /**
-     * set stocks
+     * Set stocks
      * @param Collection $stocks
      * @return Products
      */

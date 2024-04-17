@@ -1,7 +1,5 @@
 <?php
 
-// src/Entity/Employees.php
-
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -11,11 +9,10 @@ use JsonSerializable;
  * @ORM\Entity(repositoryClass="App\Repository\EmployeeRepository")
  * @ORM\Table(name="Employees")
  */
-
 class Employees implements JsonSerializable
 {
 
-    //déclaration des attributs & annotation doctrines
+    // Declaration of attributes & Doctrine annotations
 
     /**
      * @var int
@@ -23,42 +20,36 @@ class Employees implements JsonSerializable
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      */
-
     private int $employee_id;
 
     /**
      * @ORM\ManyToOne(targetEntity=Stores::class, inversedBy="employees")
      * @ORM\JoinColumn(name="store_id", referencedColumnName="store_id")
      */
-
     private $store;
 
     /**
      * @var string
      * @ORM\Column(type="string")
      */
-
     private string $employee_name;
 
     /**
      * @var string
      * @ORM\Column(type="string")
      */
-
     private string $employee_email;
 
     /**
      * @var string
      * @ORM\Column(type="string")
      */
-
     private string $employee_password;
 
     /**
      * @var string
      * @ORM\Column(type="string")
      */
-
     private string $employee_role;
 
     public function __toString()
@@ -66,10 +57,10 @@ class Employees implements JsonSerializable
         return "Employé :{$this->employee_id}, {$this->store}, {$this->employee_name}, {$this->employee_email}, {$this->employee_password}, {$this->employee_role}";
     }
 
-    //getters & setters
+    // Getters and setters
 
     /**
-     * get employee_id
+     * Get employee_id
      * @return int
      */
     public function getEmployeeId(): int
@@ -78,7 +69,7 @@ class Employees implements JsonSerializable
     }
 
     /**
-     * get store_id
+     * Get store_id
      * @return int
      */
     public function getStoreId(): int
@@ -87,7 +78,7 @@ class Employees implements JsonSerializable
     }
 
     /**
-     * get employee_name
+     * Get employee_name
      * @return string
      */
     public function getEmployeeName(): string
@@ -96,7 +87,7 @@ class Employees implements JsonSerializable
     }
 
     /**
-     * get employee_email
+     * Get employee_email
      * @return string
      */
     public function getEmployeeEmail(): string
@@ -105,7 +96,7 @@ class Employees implements JsonSerializable
     }
 
     /**
-     * get employee_password
+     * Get employee_password
      * @return string
      */
     public function getEmployeePassword(): string
@@ -114,7 +105,7 @@ class Employees implements JsonSerializable
     }
 
     /**
-     * get employee_role
+     * Get employee_role
      * @return string
      */
     public function getEmployeeRole(): string
@@ -122,9 +113,8 @@ class Employees implements JsonSerializable
         return $this->employee_role;
     }
 
-
     /**
-     * set employee_name
+     * Set employee_name
      * @param string $employee_name
      * @return Employees
      */
@@ -135,7 +125,7 @@ class Employees implements JsonSerializable
     }
 
     /**
-     * set store_id
+     * Set store_id
      * @param Stores $store
      * @return Employees
      */
@@ -146,7 +136,7 @@ class Employees implements JsonSerializable
     }
 
     /**
-     * set employee_email
+     * Set employee_email
      * @param string $employee_email
      * @return Employees
      */
@@ -157,7 +147,7 @@ class Employees implements JsonSerializable
     }
 
     /**
-     * set employee_password
+     * Set employee_password
      * @param string $employee_password
      * @return Employees
      */
@@ -168,7 +158,7 @@ class Employees implements JsonSerializable
     }
 
     /**
-     * set employee_role
+     * Set employee_role
      * @param string $employee_role
      * @return Employees
      */

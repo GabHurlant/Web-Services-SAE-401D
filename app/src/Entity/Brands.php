@@ -1,5 +1,4 @@
 <?php
-//src/Entity/Brands.php
 
 namespace App\Entity;
 
@@ -12,24 +11,23 @@ use JsonSerializable;
  * @ORM\Entity(repositoryClass="App\Repository\BrandRepository")
  * @ORM\Table(name="Brands")
  */
-
 class Brands implements JsonSerializable
 {
 
-    // décclaration des attributs & annotation doctrines
+    // Declaration of attributes & Doctrine annotations
 
-    /** @var int 
+    /** 
+     * @var int 
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      */
-
     private int $brand_id;
 
-    /** @var string 
+    /** 
+     * @var string 
      * @ORM\Column(type="string")
      */
-
     private string $brand_name;
 
     /**
@@ -47,10 +45,10 @@ class Brands implements JsonSerializable
         return "Marque :{$this->brand_id}, {$this->brand_name}";
     }
 
-    //getters & setters
+    // Getters and setters
 
     /**
-     * get brand_id
+     * Get brand_id
      * @return int
      */
     public function getBrandId(): int
@@ -59,7 +57,7 @@ class Brands implements JsonSerializable
     }
 
     /**
-     * get brand_name
+     * Get brand_name
      * @return string
      */
     public function getBrandName(): string
@@ -68,11 +66,10 @@ class Brands implements JsonSerializable
     }
 
     /**
-     * set brand_name
+     * Set brand_name
      * @param string $brand_name
      * @return Brands
      */
-
     public function setBrandName(string $brand_name): Brands
     {
         $this->brand_name = $brand_name;
