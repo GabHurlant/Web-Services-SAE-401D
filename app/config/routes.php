@@ -18,7 +18,7 @@ $storeController = new StoreController($entityManager);
 
 return [
 
-    //class brand
+    // Routes for BrandController
     [
         'method' => 'GET',
         'path' => '/bikestores/brands',
@@ -50,7 +50,7 @@ return [
         'action' => 'deleteBrand'
     ],
 
-    //class Categories
+    // Routes for CategoriesController
     [
         'method' => 'GET',
         'path' => '/bikestores/categories/(?P<categoryId>\d+)',
@@ -88,7 +88,7 @@ return [
         'action' => 'deleteCategory'
     ],
 
-    //class Employee
+    // Routes for EmployeeController
     [
         'method' => 'GET',
         'path' => '/bikestores/employees',
@@ -114,7 +114,7 @@ return [
         'action' => 'deleteEmployee'
     ],
 
-    //class products
+    // Routes for ProductController
 
     [
         'method' => 'GET',
@@ -147,7 +147,7 @@ return [
         'action' => 'deleteProduct'
     ],
 
-    //class stock
+    // Routes for StockController
     [
         'method' => 'PUT',
         'path' => '/bikestores/stocks/update/(?P<stockId>\d+)',
@@ -155,7 +155,7 @@ return [
         'action' => 'updateStock'
     ],
 
-    //class stores
+    // Routes for StoreController
     [
         'method' => 'GET',
         'path' => '/bikestores/stores',
