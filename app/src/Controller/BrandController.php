@@ -30,6 +30,10 @@ class BrandController
 
     /**
      * Get all brands
+     * @OA\Get(
+     *     path="/bikestores/brands",
+     *     @OA\Response(response="200", description="Returns all brands")
+     * )
      */
 
     public function getAllBrands()
@@ -43,6 +47,16 @@ class BrandController
     /**
      * Find products by brand name
      * @param string $brandName
+     * * @OA\Get(
+     *     path="/bikestores/brands/{brandName}",
+     *     @OA\Parameter(
+     *         name="brandName",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(response="200", description="Returns products by brand name")
+     * )
      */
     public function findProductsByBrandName($brandName)
     {
@@ -75,6 +89,19 @@ class BrandController
      * Create a new brand
      * @param string $brandName
      * @return Brands|null
+     * @OA\Post(
+     *     path="/bikestores/brands/create",
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="brandName", type="string"),
+     *                 @OA\Property(property="API_KEY", type="string")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="Create a new brand")
+     * )
      */
     public function createBrand($brandName)
     {
@@ -105,6 +132,25 @@ class BrandController
      * Update an existing brand
      * @param array $params
      * @return Brands|null
+     *  @OA\Put(
+     *     path="/bikestores/brands/update/{brandId}",
+     *     @OA\Parameter(
+     *         name="brandId",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         @OA\MediaType(
+     *             mediaType="application/json",
+     *             @OA\Schema(
+     *                 @OA\Property(property="brandName", type="string"),
+     *                 @OA\Property(property="API_KEY", type="string")
+     *             )
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="Update an existing brand")
+     * )
      */
     public function updateBrand($params)
     {
@@ -141,6 +187,16 @@ class BrandController
     /**
      * Delete a brand
      * @param array $params
+     * @OA\Delete(
+     *     path="/bikestores/brands/delete/{brandId}",
+     *     @OA\Parameter(
+     *         name="brandId",
+     *         in="path",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(response="200", description="Delete a brand")
+     * )
      */
     public function deleteBrand($params)
     {
