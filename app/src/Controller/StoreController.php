@@ -26,14 +26,14 @@ class StoreController
         echo json_encode($stores);
     }
 
-    public function getEmployeesByStoreId($storeName)
-    {
-        $employees = $this->storeRepository->getEmployeesByStoreName($storeName);
-        if ($employees['status'] == 0) {
-            throw new \Exception($employees['message']);
-        }
-        return $employees['data'];
-    }
+    // public function getEmployeesByStoreId($storeName)
+    // {
+    //     $employees = $this->storeRepository->getEmployeesByStoreName($storeName);
+    //     if ($employees['status'] == 0) {
+    //         throw new \Exception($employees['message']);
+    //     }
+    //     return $employees['data'];
+    // }
 
 
     public function createStore()
