@@ -37,7 +37,7 @@ class StoreController
     public function getStores()
     {
         $stores = $this->storeRepository->findAll();
-        header('Content-Type: application/json');
+
         echo json_encode($stores);
     }
 

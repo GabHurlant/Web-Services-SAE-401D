@@ -39,7 +39,7 @@ class EmployeeController
     public function getAllEmployees()
     {
         $employees = $this->employeeRepository->findAll();
-        header('Content-Type: application/json');
+
         echo json_encode($employees);
     }
 
@@ -79,7 +79,7 @@ class EmployeeController
 
             $this->entityManager->persist($employee);
             $this->entityManager->flush();
-            header('Content-Type: application/json');
+
             echo json_encode(['success' => 'Employee added successfully']);
         }
     }

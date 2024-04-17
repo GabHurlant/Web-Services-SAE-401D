@@ -39,7 +39,7 @@ class ProductController
     public function getAllProducts()
     {
         $products = $this->productRepository->findAll();
-        header('Content-Type: application/json');
+
         echo json_encode($products);
     }
 
@@ -51,7 +51,7 @@ class ProductController
     {
         $productId = $productId['productId'];
         $product = $this->productRepository->find($productId);
-        header('Content-Type: application/json');
+
         echo json_encode($product);
     }
 
