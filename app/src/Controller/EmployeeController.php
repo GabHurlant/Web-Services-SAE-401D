@@ -32,6 +32,12 @@ class EmployeeController
     public function addEmployee()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['employee_name']) && isset($_POST['employee_email']) && isset($_POST['employee_password']) && isset($_POST['employee_role']) && isset($_POST['store_id'])) {
+
+            if (!isset($_POST["API_KEY"]) || $_POST['API_KEY'] !== self::API_KEY) {
+                echo json_encode(["error" => "Invalid API Key"]);
+                return;
+            }
+
             $storeId = $_POST['store_id'];
             $employeeName = $_POST['employee_name'];
             $employeeEmail = $_POST['employee_email'];

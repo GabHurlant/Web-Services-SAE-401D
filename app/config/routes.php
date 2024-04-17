@@ -5,10 +5,12 @@ require_once __DIR__ . "/../bootstrap.php";
 use App\Controller\BrandController;
 use App\Controller\CategoriesController;
 use App\Controller\EmployeeController;
+use App\Controller\ProductController;
 
 $brandController = new BrandController($entityManager);
 $categoriesController = new CategoriesController($entityManager);
 $employeeController = new EmployeeController($entityManager);
+$productController = new ProductController($entityManager);
 
 return [
 
@@ -107,4 +109,38 @@ return [
         'controller' => $employeeController,
         'action' => 'deleteEmployee'
     ],
+
+    //class products
+
+    [
+        'method' => 'GET',
+        'path' => '/bikestores/products',
+        'controller' => $productController,
+        'action' => 'getAllProducts'
+    ],
+    [
+        'method' => 'GET',
+        'path' => '/bikestores/products/(?P<productId>\d+)',
+        'controller' => $productController,
+        'action' => 'getProduct'
+    ],
+    [
+        'method' => 'POST',
+        'path' => '/bikestores/products/create',
+        'controller' => $productController,
+        'action' => 'createProduct'
+    ],
+    [
+        'method' => 'PUT',
+        'path' => '/bikestores/products/update/(?P<productId>\d+)',
+        'controller' => $productController,
+        'action' => 'updateProduct'
+    ],
+    [
+        'method' => 'DELETE',
+        'path' => '/bikestores/products/delete/(?P<productId>\d+)',
+        'controller' => $productController,
+        'action' => 'deleteProduct'
+    ],
+
 ];

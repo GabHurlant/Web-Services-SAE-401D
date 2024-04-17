@@ -21,6 +21,8 @@ class CategoriesController
 
     public function getCategory($categoryId)
     {
+
+        $categoryId = $categoryId['categoryId'];
         $category = $this->categoryRepository->find($categoryId);
         header('Content-Type: application/json');
         echo json_encode($category);
