@@ -42,6 +42,11 @@ class ProductController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productName']) && isset($_POST['brandId']) && isset($_POST['categoryId']) && isset($_POST['modelYear']) && isset($_POST['productPrice'])) {
 
+            if (!isset($_PUT["API_KEY"]) || $_POST['API_KEY'] !== self::API_KEY) {
+                echo json_encode(["error" => "Invalid API Key"]);
+                return;
+            }
+
             $productName = $_POST['productName'];
             $brandId = $_POST['brandId'];
             $categoryId = $_POST['categoryId'];
@@ -75,7 +80,7 @@ class ProductController
             parse_str(file_get_contents('php://input'), $_PUT);
 
             if (!isset($_PUT["API_KEY"]) || $_PUT['API_KEY'] !== self::API_KEY) {
-                echo json_encode(["error" => "Invalid API Key"]);
+                echo json_encode(["error" => "Invalid API Key or API Key missing"]);
                 return;
             }
 

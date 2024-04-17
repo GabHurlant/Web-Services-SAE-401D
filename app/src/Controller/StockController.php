@@ -1,44 +1,76 @@
 <?php
 
-namespace Controller;
+namespace App\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Entity\Stocks;
-use Repository\StockRepository;
+use App\Entity\Stocks;
+use App\Entity\Stores;
+use App\Entity\Products;
+use App\Repository\StockRepository;
 
 class StockController
 {
     private $stockRepository;
 
+    private $entityManager;
+
+    const API_KEY = 'e8f1997c763';
+
     public function __construct(EntityManager $entityManager)
     {
+        $this->entityManager = $entityManager;
         $this->stockRepository = $entityManager->getRepository(Stocks::class);
     }
 
-    public function addStock($storeId, $productId, $quantity)
+    public function updateStock($params)
     {
-        $stock = $this->stockRepository->addStock($storeId, $productId, $quantity);
-        if ($stock['status'] == 0) {
-            throw new \Exception($stock['message']);
-        }
-        return $stock['data'];
-    }
+        $stockId = $params['stockId'];
+        if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+            parse_str(file_get_contents('php://input'), $_PUT);
 
-    public function updateStock($stockId, $quantity)
-    {
-        $stock = $this->stockRepository->updateStock($stockId, $quantity);
-        if ($stock['status'] == 0) {
-            throw new \Exception($stock['message']);
-        }
-        return $stock['data'];
-    }
+            if (!isset($_PUT["API_KEY"]) || $_PUT['API_KEY'] !== self::API_KEY) {
+                echo json_encode(["error" => "Invalid API Key"]);
+                return;
+            }
 
-    public function deleteStock($stockId)
-    {
-        $stock = $this->stockRepository->deleteStock($stockId);
-        if ($stock['status'] == 0) {
-            throw new \Exception($stock['message']);
+            $stock = $this->entityManager->getRepository(Stocks::class)->find($stockId);
+
+            if (!$stock) {
+                echo json_encode(["error" => "Stock not found"]);
+                return;
+            }
+
+
+
+            if (isset($_PUT['storeId'])) {
+                $storeId = $_PUT['storeId'];
+                $store = $this->entityManager->getRepository(Stores::class)->find($storeId);
+                if (!$store) {
+                    echo json_encode(["error" => "Store not found"]);
+                    return;
+                }
+            }
+
+
+            if (isset($_PUT['productId'])) {
+                $productId = $_PUT['productId'];
+                $product = $this->entityManager->getRepository(Products::class)->find($productId);
+                if (!$product) {
+                    echo json_encode(["error" => "Product not found"]);
+                    return;
+                }
+            }
+
+            $quantity = $_PUT['quantity'];
+            $stock->setQuantity($quantity);
+
+
+            $this->entityManager->flush();
+
+            echo json_encode(['success' => 'Stock updated']);
+            return $stock;
+        } else {
+            echo json_encode(["error" => "invalid request"]);
         }
-        return $stock['data'];
     }
 }

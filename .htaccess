@@ -5,10 +5,10 @@ DirectoryIndex doc.php
 RewriteEngine On
 
 # Get all
-RewriteRule ^(brands|stores|products|employees|categories|stocks)$ index.php [L]
+RewriteRule ^(brands|stores|products|employees|categories)$ index.php [L]
 
 # Get a single item
-RewriteRule ^(brands|categories|products|stocks|stores|employees)/(\d+)$ index.php?id=$2 [QSA,L]
+RewriteRule ^(brands|categories|products|stores|employees)/(\d+)$ index.php?id=$2 [QSA,L]
 
 # product with brand name
 RewriteRule ^brands/([a-zA-Z0-9_-]+)$ index.php?brandName=$1 [QSA,L]

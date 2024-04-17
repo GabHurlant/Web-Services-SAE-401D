@@ -6,11 +6,15 @@ use App\Controller\BrandController;
 use App\Controller\CategoriesController;
 use App\Controller\EmployeeController;
 use App\Controller\ProductController;
+use App\Controller\StockController;
+use App\Controller\StoreController;
 
 $brandController = new BrandController($entityManager);
 $categoriesController = new CategoriesController($entityManager);
 $employeeController = new EmployeeController($entityManager);
 $productController = new ProductController($entityManager);
+$stockController = new StockController($entityManager);
+$storeController = new StoreController($entityManager);
 
 return [
 
@@ -141,6 +145,40 @@ return [
         'path' => '/bikestores/products/delete/(?P<productId>\d+)',
         'controller' => $productController,
         'action' => 'deleteProduct'
+    ],
+
+    //class stock
+    [
+        'method' => 'PUT',
+        'path' => '/bikestores/stocks/update/(?P<stockId>\d+)',
+        'controller' => $stockController,
+        'action' => 'updateStock'
+    ],
+
+    //class stores
+    [
+        'method' => 'GET',
+        'path' => '/bikestores/stores',
+        'controller' => $storeController,
+        'action' => 'getStores'
+    ],
+    [
+        'method' => 'GET',
+        'path' => '/bikestores/stores/employees/(?P<storeName>[a-zA-Z0-9_\-]+)',
+        'controller' => $storeController,
+        'action' => 'getEmployeesByStoreId'
+    ],
+    [
+        'method' => 'POST',
+        'path' => '/bikestores/stores/create',
+        'controller' => $storeController,
+        'action' => 'createStore'
+    ],
+    [
+        'method' => 'PUT',
+        'path' => '/bikestores/stores/update/(?P<storeId>\d+)',
+        'controller' => $storeController,
+        'action' => 'updateStore'
     ],
 
 ];
