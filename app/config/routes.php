@@ -4,9 +4,11 @@ require_once __DIR__ . "/../bootstrap.php";
 
 use App\Controller\BrandController;
 use App\Controller\CategoriesController;
+use App\Controller\EmployeeController;
 
 $brandController = new BrandController($entityManager);
 $categoriesController = new CategoriesController($entityManager);
+$employeeController = new EmployeeController($entityManager);
 
 return [
 
@@ -78,6 +80,31 @@ return [
         'path' => '/bikestores/categories/delete/(?P<categoryId>\d+)',
         'controller' => $categoriesController,
         'action' => 'deleteCategory'
-    ]
+    ],
 
+    //class Employee
+    [
+        'method' => 'GET',
+        'path' => '/bikestores/employees',
+        'controller' => $employeeController,
+        'action' => 'getAllEmployees'
+    ],
+    [
+        'method' => 'POST',
+        'path' => '/bikestores/employees/create',
+        'controller' => $employeeController,
+        'action' => 'addEmployee'
+    ],
+    [
+        'method' => 'PUT',
+        'path' => '/bikestores/employees/update/(?P<employeeId>\d+)',
+        'controller' => $employeeController,
+        'action' => 'updateEmployee'
+    ],
+    [
+        'method' => 'DELETE',
+        'path' => '/bikestores/employees/delete/(?P<employeeId>\d+)',
+        'controller' => $employeeController,
+        'action' => 'deleteEmployee'
+    ],
 ];

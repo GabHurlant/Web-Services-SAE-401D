@@ -34,30 +34,30 @@ class CategoriesController
     }
 
 
-    public function findProductsByCategoryName($categoryName)
-    {
-        $categoryName = urldecode($categoryName);
-        $category = $this->categoryRepository->findOneBy(['category_name' => $categoryName]);
-        if ($category) {
-            $products = $category->getProducts()->toArray();
-            $productData = [];
-            foreach ($products as $product) {
-                $productData[] = [
-                    'id' => $product->getProductId(),
-                    'name' => $product->getProductName(),
-                    'brand' => $product->getBrand()->getBrandName(),
-                    'category' => $product->getCategory()->getCategoryName(),
-                    'year' => $product->getModelYear(),
-                    'price' => $product->getListPrice()
-                ];
-            }
-            header('Content-Type: application/json');
-            echo json_encode($productData);
-        } else {
-            header('Content-Type: application/json');
-            echo json_encode(["error" => "Category not found"]);
-        }
-    }
+    // public function findProductsByCategoryName($categoryName)
+    // {
+    //     $categoryName = urldecode($categoryName);
+    //     $category = $this->categoryRepository->findOneBy(['category_name' => $categoryName]);
+    //     if ($category) {
+    //         $products = $category->getProducts()->toArray();
+    //         $productData = [];
+    //         foreach ($products as $product) {
+    //             $productData[] = [
+    //                 'id' => $product->getProductId(),
+    //                 'name' => $product->getProductName(),
+    //                 'brand' => $product->getBrand()->getBrandName(),
+    //                 'category' => $product->getCategory()->getCategoryName(),
+    //                 'year' => $product->getModelYear(),
+    //                 'price' => $product->getListPrice()
+    //             ];
+    //         }
+    //         header('Content-Type: application/json');
+    //         echo json_encode($productData);
+    //     } else {
+    //         header('Content-Type: application/json');
+    //         echo json_encode(["error" => "Category not found"]);
+    //     }
+    // }
 
 
 

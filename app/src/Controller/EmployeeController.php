@@ -1,53 +1,145 @@
 <?php
 
-namespace Controller;
+namespace App\Controller;
 
 use Doctrine\ORM\EntityManager;
-use Entity\Employees;
+use App\Entity\Employees;
+use App\Entity\Stores;
 use Repository\EmployeeRepository;
 
 class EmployeeController
 {
     private $employeeRepository;
+    private $entityManager;
+
+    const API_KEY = "e8f1997c763";
 
     public function __construct(EntityManager $entityManager)
     {
+        $this->entityManager = $entityManager;
         $this->employeeRepository = $entityManager->getRepository(Employees::class);
     }
 
     public function getAllEmployees()
     {
-        $employees = $this->employeeRepository->getAllEmployees();
-        if ($employees['status'] == 0) {
-            throw new \Exception($employees['message']);
-        }
-        return $employees['data'];
+        $employees = $this->employeeRepository->findAll();
+        header('Content-Type: application/json');
+        echo json_encode($employees);
     }
 
-    public function addEmployee($storeId, $employeeName, $employeeEmail, $employeePassword, $employeeRole)
+
+
+    public function addEmployee()
     {
-        $employee = $this->employeeRepository->addEmployee($storeId, $employeeName, $employeeEmail, $employeePassword, $employeeRole);
-        if ($employee['status'] == 0) {
-            throw new \Exception($employee['message']);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['employee_name']) && isset($_POST['employee_email']) && isset($_POST['employee_password']) && isset($_POST['employee_role']) && isset($_POST['store_id'])) {
+            $storeId = $_POST['store_id'];
+            $employeeName = $_POST['employee_name'];
+            $employeeEmail = $_POST['employee_email'];
+            $employeePassword = $_POST['employee_password'];
+            $employeeRole = $_POST['employee_role'];
+
+            // Récupérer l'instance de Stores correspondant à storeId
+            $store = $this->entityManager->getRepository(Stores::class)->find($storeId);
+            if (!$store) {
+                echo json_encode(["error" => "Store not found"]);
+                return;
+            }
+
+            $employee = new Employees();
+            $employee->setStore($store); // Passer l'instance de Stores à setStore()
+            $employee->setEmployeeName($employeeName);
+            $employee->setEmployeeEmail($employeeEmail);
+            $employee->setEmployeePassword($employeePassword);
+            $employee->setEmployeeRole($employeeRole);
+
+            $this->entityManager->persist($employee);
+            $this->entityManager->flush();
+            header('Content-Type: application/json');
+            echo json_encode(['success' => 'Employee added successfully']);
         }
-        return $employee['data'];
     }
 
-    public function updateEmployee($employeeName, $employeeEmail, $employeePassword, $employeeRole)
+
+
+    public function updateEmployee($params)
     {
-        $employee = $this->employeeRepository->updateEmployee($employeeName, $employeeEmail, $employeePassword, $employeeRole);
-        if ($employee['status'] == 0) {
-            throw new \Exception($employee['message']);
+        $employeeId = $params['employeeId'];
+        if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
+            parse_str(file_get_contents('php://input'), $_PUT);
+
+            if (!isset($_PUT["API_KEY"]) || $_PUT['API_KEY'] !== self::API_KEY) {
+                echo json_encode(["error" => "Invalid API Key"]);
+                return;
+            }
+
+            $employee = $this->entityManager->getRepository(Employees::class)->find($employeeId);
+
+            if (isset($_PUT['employee_name'])) {
+                $employeeName = $_PUT['employee_name'];
+                $employee->setEmployeeName($employeeName);
+            }
+
+            if (isset($_PUT['store_id'])) {
+                $storeId = $_PUT['store_id'];
+                $store = $this->entityManager->getRepository(Stores::class)->find($storeId);
+                if (!$store) {
+                    echo json_encode(["error" => "Store not found"]);
+                    return;
+                }
+                $employee->setStore($store);
+            }
+
+            if (isset($_PUT['employee_email'])) {
+                $employeeEmail = $_PUT['employee_email'];
+                $employee->setEmployeeEmail($employeeEmail);
+            }
+
+            if (isset($_PUT['employee_password'])) {
+                $employeePassword = $_PUT['employee_password'];
+                $employee->setEmployeePassword($employeePassword);
+            }
+
+            if (isset($_PUT['employee_role'])) {
+                $employeeRole = $_PUT['employee_role'];
+                $employee->setEmployeeRole($employeeRole);
+            }
+
+            $this->entityManager->flush();
+
+            echo json_encode(['success' => 'Employee updated']);
+            return $employee;
+        } else {
+            echo json_encode(["error" => "invalid request"]);
         }
-        return $employee['data'];
     }
 
-    public function deleteEmployee($employeeName)
+
+
+    public function deleteEmployee($params)
     {
-        $employee = $this->employeeRepository->deleteEmployee($employeeName);
-        if ($employee['status'] == 0) {
-            throw new \Exception($employee['message']);
+        $employeeId = $params['employeeId'];
+        if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+            parse_str(file_get_contents('php://input'), $_DELETE);
+
+            if (!isset($_DELETE["API_KEY"]) || $_DELETE['API_KEY'] !== self::API_KEY) {
+                echo json_encode(["error" => "Invalid API Key"]);
+                return;
+            }
+
+            $employee = $this->entityManager->getRepository(Employees::class)->find($employeeId);
+
+            if (!$employee) {
+                echo json_encode(["error" => "Employee not found"]);
+                return;
+            }
+
+            $this->entityManager->remove($employee);
+            $this->entityManager->flush();
+
+            echo json_encode(['success' => 'Employee deleted']);
+        } else {
+            echo json_encode(["error" => "invalid request"]);
+            return;
         }
-        return $employee['data'];
     }
 }

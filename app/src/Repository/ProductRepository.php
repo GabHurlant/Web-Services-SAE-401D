@@ -1,6 +1,6 @@
 <?php
 // src/Repository/ProductsRepository.class.php
-namespace Repository;
+namespace App\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;

@@ -17,7 +17,7 @@ RewriteRule ^categories/([a-zA-Z0-9_-]+)$ index.php?categoryName=$1 [QSA,L]
 RewriteRule ^(brands|stores|products|employees|categories|stocks)/create$ index.php [L]
 
 # Update
-RewriteRule ^(brands|categories|products|stocks|stores)/update/(\d+)$ index.php [L]
+RewriteRule ^(brands|categories|products|stocks|stores|employees)/update/(\d+)$ index.php [L]
 
 # Delete
-RewriteRule ^(brands|categories|products|stocks|stores)/delete/(\d+)$ index.php [L]
+RewriteRule ^(brands|categories|products|stocks|stores|employees)/delete/(\d+)$ index.php [L]
