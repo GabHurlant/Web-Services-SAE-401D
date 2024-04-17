@@ -35,7 +35,7 @@ class BrandController
     public function getAllBrands()
     {
         $brands = $this->entityManager->getRepository(Brands::class)->findAll();
-
+        header('Content-Type: application/json');
         echo json_encode($brands);
     }
 
@@ -61,10 +61,10 @@ class BrandController
                     'price' => $product->getListPrice()
                 ];
             }
-
+            header('Content-Type: application/json');
             echo json_encode($productData);
         } else {
-
+            header('Content-Type: application/json');
             echo json_encode(["error" => "Brand not found"]);
         }
     }

@@ -40,7 +40,7 @@ class CategoriesController
 
         $categoryId = $categoryId['categoryId'];
         $category = $this->categoryRepository->find($categoryId);
-
+        header('Content-Type: application/json');
         echo json_encode($category);
     }
 
@@ -50,7 +50,7 @@ class CategoriesController
     public function getAllCategories()
     {
         $categories = $this->categoryRepository->findAll();
-
+        header('Content-Type: application/json');
         echo json_encode($categories);
     }
 
@@ -72,10 +72,10 @@ class CategoriesController
     //                 'price' => $product->getListPrice()
     //             ];
     //         }
-    //         
+    //         header('Content-Type: application/json');
     //         echo json_encode($productData);
     //     } else {
-    //         
+    //         header('Content-Type: application/json');
     //         echo json_encode(["error" => "Category not found"]);
     //     }
     // }
