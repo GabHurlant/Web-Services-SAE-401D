@@ -1,4 +1,5 @@
 <?php
+//src/Entity/Stores.php
 
 namespace App\Entity;
 
@@ -11,10 +12,11 @@ use JsonSerializable;
  * @ORM\Entity(repositoryClass="App\Repository\StoreRepository")
  * @ORM\Table(name="Stores")
  */
+
 class Stores implements JsonSerializable
 {
 
-    // Declaration of attributes & Doctrine annotations
+    //déclaration des attributs & annotation doctrines
 
     /**
      * @var int
@@ -22,48 +24,56 @@ class Stores implements JsonSerializable
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      */
+
     private int $store_id;
 
     /**
      * @var string
      * @ORM\Column(type="string")
      */
+
     private string $store_name;
 
     /**
      * @var string
      * @ORM\Column(type="string")
      */
+
     private string $phone;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=25)
      */
+
     private string $email;
 
     /**
      * @var string
      * @ORM\Column(type="string")
      */
+
     private string $street;
 
     /**
      * @var string
      * @ORM\Column(type="string")
      */
+
     private string $city;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=10)
      */
+
     private string $state;
 
     /**
      * @var string
      * @ORM\Column(type="string", length=5)
      */
+
     private string $zip_code;
 
     /**

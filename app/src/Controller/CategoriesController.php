@@ -4,37 +4,21 @@ namespace App\Controller;
 
 use Doctrine\ORM\EntityManager;
 use App\Entity\Categories;
-use App\Repository\CategoryRepository;
+use Repository\CategoryRepository;
 
-/**
- * Class CategoriesController
- * @package App\Controller
- */
 class CategoriesController
 {
-    /** @var EntityManager */
     private $entityManager;
-
-    /** @var CategoryRepository */
     private $categoryRepository;
 
-    /** @var string */
     const API_KEY = "e8f1997c763";
 
-    /**
-     * CategoriesController constructor.
-     * @param EntityManager $entityManager
-     */
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
         $this->categoryRepository = $entityManager->getRepository(Categories::class);
     }
 
-    /**
-     * Get a specific category
-     * @param mixed $categoryId
-     */
     public function getCategory($categoryId)
     {
 
@@ -44,9 +28,6 @@ class CategoriesController
         echo json_encode($category);
     }
 
-    /**
-     * Get all categories
-     */
     public function getAllCategories()
     {
         $categories = $this->categoryRepository->findAll();
@@ -81,10 +62,7 @@ class CategoriesController
     // }
 
 
-    /**
-     * Create a new category
-     * @param string $categoryName
-     */
+
     public function createCategory($categoryName)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['categoryName'])) {
@@ -106,11 +84,7 @@ class CategoriesController
     }
 
 
-    /**
-     * Update an existing category
-     * @param array $params
-     * @return Categories|null
-     */
+
     public function updateCategory($params)
     {
         $categoryId = $params['categoryId'];
@@ -142,10 +116,7 @@ class CategoriesController
     }
 
 
-    /**
-     * Delete a category
-     * @param array $params
-     */
+
     public function deleteCategory($params)
     {
         $categoryId = $params['categoryId'];

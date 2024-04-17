@@ -1,4 +1,5 @@
 <?php
+//src/Entity/Categories.php
 
 namespace App\Entity;
 
@@ -11,23 +12,24 @@ use JsonSerializable;
  * @ORM\Entity(repositoryClass="App\Repository\CategoryRepository")
  * @ORM\Table(name="Categories")
  */
+
 class Categories implements JsonSerializable
 {
 
-    // Declaration of attributes & Doctrine annotations
+    //déclaration des attributs & annotation doctrines
 
-    /** 
-     * @var int 
+    /** @var int 
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      */
+
     private int $category_id;
 
-    /** 
-     * @var string 
+    /** @var string 
      * @ORM\Column(type="string")
      */
+
     private string $category_name;
 
     /**
@@ -45,10 +47,10 @@ class Categories implements JsonSerializable
         return "Catégorie :{$this->category_id}, {$this->category_name}";
     }
 
-    // Getters and setters
+    //getters & setters
 
     /**
-     * Get category_id
+     * get category_id
      * @return int
      */
     public function getCategoryId(): int
@@ -57,7 +59,7 @@ class Categories implements JsonSerializable
     }
 
     /**
-     * Get category_name
+     * get category_name
      * @return string
      */
     public function getCategoryName(): string
@@ -66,7 +68,7 @@ class Categories implements JsonSerializable
     }
 
     /**
-     * Set category_name
+     * set category_name
      * @param string $category_name
      * @return Categories
      */

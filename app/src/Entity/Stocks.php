@@ -1,4 +1,5 @@
 <?php
+//src/Entity/Stocks.php
 
 namespace App\Entity;
 
@@ -11,17 +12,18 @@ use JsonSerializable;
  * @ORM\Entity(repositoryClass="App\Repository\StockRepository")
  * @ORM\Table(name="Stocks")
  */
+
 class Stocks implements JsonSerializable
 {
 
-    // Declaration of attributes & Doctrine annotations
+    //déclaration des attributs & annotation doctrines
 
-    /**
-     * @var int
+    /** @var int 
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
      */
+
     private int $stock_id;
 
     /**
@@ -36,21 +38,24 @@ class Stocks implements JsonSerializable
      */
     private $product;
 
-    /**
-     * @var int
+    /** @var int 
      * @ORM\Column(type="integer")
      */
+
+
     private int $quantity;
+
+
 
     public function __toString()
     {
         return "Stock :{$this->stock_id}, {$this->store}, {$this->product}, {$this->quantity}";
     }
 
-    // Getters and setters
+    //getters & setters
 
     /**
-     * Get stock_id
+     * get stock_id
      * @return int
      */
     public function getStockId(): int
@@ -59,7 +64,7 @@ class Stocks implements JsonSerializable
     }
 
     /**
-     * Get store
+     * get store
      * @return Stores
      */
     public function getStore(): Stores
@@ -68,8 +73,9 @@ class Stocks implements JsonSerializable
     }
 
     /**
-     * Get product
+     * get product
      * @return Products
+     * 
      */
     public function getProduct(): Products
     {
@@ -77,7 +83,7 @@ class Stocks implements JsonSerializable
     }
 
     /**
-     * Get quantity
+     * get quantity
      * @return int
      */
     public function getQuantity(): int
@@ -86,7 +92,7 @@ class Stocks implements JsonSerializable
     }
 
     /**
-     * Set store
+     * set store
      * @param Stores $store
      * @return Stocks
      */
@@ -97,7 +103,12 @@ class Stocks implements JsonSerializable
     }
 
     /**
-     * Set product
+     * set product_id
+     * @param int $product_id
+     * @return Stocks
+     */
+    /**
+     * set product
      * @param Products $product
      * @return Stocks
      */
@@ -108,7 +119,7 @@ class Stocks implements JsonSerializable
     }
 
     /**
-     * Set quantity
+     * set quantity
      * @param int $quantity
      * @return Stocks
      */
