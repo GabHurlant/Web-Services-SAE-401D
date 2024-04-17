@@ -9,11 +9,12 @@ class BrandController
 {
     private $entityManager;
     private $brandRepository;
-
+    const API_KEY = "e8f1997c763";
     public function __construct($entityManager)
     {
         $this->entityManager = $entityManager;
     }
+
 
     // method get
 
@@ -58,6 +59,11 @@ class BrandController
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['brandName'])) {
             $brandName = $_POST['brandName'];
 
+            if (!isset($_POST["API_KEY"]) || $_POST['API_KEY'] !== self::API_KEY) {
+                echo json_encode(["error" => "Invalid API Key"]);
+                return;
+            }
+
             $brand = new Brands();
             $brand->setBrandName($brandName);
 
@@ -78,6 +84,11 @@ class BrandController
         $brandId = $params['brandId'];
         if ($_SERVER['REQUEST_METHOD'] === 'PUT') {
             parse_str(file_get_contents('php://input'), $_PUT);
+
+            if (!isset($_POST["API_KEY"]) || $_POST['API_KEY'] !== self::API_KEY) {
+                echo json_encode(["error" => "Invalid API Key"]);
+                return;
+            }
 
             if (isset($_PUT['brandName'])) {
                 $brandName = $_PUT['brandName'];
@@ -103,6 +114,12 @@ class BrandController
     {
         $brandId = $params['brandId'];
         if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+
+            if (!isset($_POST["API_KEY"]) || $_POST['API_KEY'] !== self::API_KEY) {
+                echo json_encode(["error" => "Invalid API Key"]);
+                return;
+            }
+
             $brand = $this->entityManager->getRepository(Brands::class)->find($brandId);
 
             $this->entityManager->remove($brand);
