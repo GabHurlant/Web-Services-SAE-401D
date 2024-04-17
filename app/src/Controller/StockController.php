@@ -35,8 +35,38 @@ class StockController
 
     /**
      * Update stock information
-     * @param array $params
-     * @return Stocks|null
+     *
+     * @OA\Put(
+     *     path="/bikestores/stocks/update/{stockId}",
+     *     tags={"Stocks"},
+     *     summary="Update stock information",
+     *     operationId="updateStock",
+     *     @OA\Parameter(
+     *         name="stockId",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the stock to update",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"storeId", "productId", "quantity"},
+     *             @OA\Property(property="storeId", type="integer"),
+     *             @OA\Property(property="productId", type="integer"),
+     *             @OA\Property(property="quantity", type="integer"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Stock updated",
+     *         @OA\JsonContent(ref="#/components/schemas/Stock")
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid API Key or missing required fields"
+     *     )
+     * )
      */
     public function updateStock($params)
     {

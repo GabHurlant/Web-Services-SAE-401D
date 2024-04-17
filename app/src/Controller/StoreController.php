@@ -33,6 +33,21 @@ class StoreController
 
     /**
      * Get all stores
+     *
+     * @OA\Get(
+     *     path="/stores",
+     *     tags={"Stores"},
+     *     summary="Get all stores",
+     *     operationId="getStores",
+     *     @OA\Response(
+     *         response=200,
+     *         description="An array of stores",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/Store")
+     *         )
+     *     )
+     * )
      */
     public function getStores()
     {
@@ -53,6 +68,35 @@ class StoreController
 
     /**
      * Create a new store
+     *
+     * @OA\Post(
+     *     path="/stores/create",
+     *     tags={"Stores"},
+     *     summary="Create a new store",
+     *     operationId="createStore",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"storeName", "storeZip", "storeCity", "storeStreet", "storeState", "phone", "email"},
+     *             @OA\Property(property="storeName", type="string"),
+     *             @OA\Property(property="storeZip", type="string"),
+     *             @OA\Property(property="storeCity", type="string"),
+     *             @OA\Property(property="storeStreet", type="string"),
+     *             @OA\Property(property="storeState", type="string"),
+     *             @OA\Property(property="phone", type="string"),
+     *             @OA\Property(property="email", type="string"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Store created",
+     *         @OA\JsonContent(ref="#/components/schemas/Store")
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid API Key or missing required fields"
+     *     )
+     * )
      */
     public function createStore()
     {
@@ -92,8 +136,42 @@ class StoreController
 
     /**
      * Update an existing store
-     * @param array $params
-     * @return Stores|null
+     *
+     * @OA\Put(
+     *     path="/stores/update/{storeId}",
+     *     tags={"Stores"},
+     *     summary="Update an existing store",
+     *     operationId="updateStore",
+     *     @OA\Parameter(
+     *         name="storeId",
+     *         in="path",
+     *         required=true,
+     *         description="ID of the store to update",
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"storeName", "storeZip", "storeCity", "storeStreet", "storeState", "phone", "email"},
+     *             @OA\Property(property="storeName", type="string"),
+     *             @OA\Property(property="storeZip", type="string"),
+     *             @OA\Property(property="storeCity", type="string"),
+     *             @OA\Property(property="storeStreet", type="string"),
+     *             @OA\Property(property="storeState", type="string"),
+     *             @OA\Property(property="phone", type="string"),
+     *             @OA\Property(property="email", type="string"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Store updated",
+     *         @OA\JsonContent(ref="#/components/schemas/Store")
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Invalid API Key or missing required fields"
+     *     )
+     * )
      */
     public function updateStore($params)
     {
