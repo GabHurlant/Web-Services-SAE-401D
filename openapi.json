@@ -1,0 +1,403 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "SAE 401: Bikestore API",
+    "description": "Here is the API I made for the SAE 401",
+    "version": "1.0.0"
+  },
+  
+  "servers": [
+    {
+      "url": "https://dev-lasne221.users.info.unicaen.fr",
+      "description": "Production server"
+    }
+  ],
+  "paths": {
+    "/bikestores/brands": {
+      "get": {
+        "summary": "Retrieve the list of brands",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new brand",
+        "responses": {
+          "201": {
+            "description": "Brand created successfully"
+          }
+        }
+      }
+    },
+    "/bikestores/brands/{brandName}": {
+      "get": {
+        "summary": "Find products by brand name",
+        "parameters": [
+          {
+            "name": "brandName",
+            "in": "path",
+            "description": "Name of the brand",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/bikestores/brands/create": {
+      "post": {
+        "summary": "Create a new brand",
+        "responses": {
+          "201": {
+            "description": "Brand created successfully"
+          }
+        }
+      }
+    },
+    "/bikestores/brands/update/{brandId}": {
+      "put": {
+        "summary": "Update a brand",
+        "parameters": [
+          {
+            "name": "brandId",
+            "in": "path",
+            "description": "ID of the brand",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Brand updated successfully"
+          }
+        }
+      }
+    },
+    "/bikestores/brands/delete/{brandId}": {
+      "delete": {
+        "summary": "Delete a brand",
+        "parameters": [
+          {
+            "name": "brandId",
+            "in": "path",
+            "description": "ID of the brand",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Brand deleted successfully"
+          }
+        }
+      }
+    },
+    "/bikestores/categories/{categoryId}": {
+      "get": {
+        "summary": "Get a category by ID",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "path",
+            "description": "ID of the category",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/bikestores/categories": {
+      "get": {
+        "summary": "Retrieve the list of categories",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new category",
+        "responses": {
+          "201": {
+            "description": "Category created successfully"
+          }
+        }
+      }
+    },
+    "/bikestores/categories/create": {
+      "post": {
+        "summary": "Create a new category",
+        "responses": {
+          "201": {
+            "description": "Category created successfully"
+          }
+        }
+      }
+    },
+    "/bikestores/categories/update/{categoryId}": {
+      "put": {
+        "summary": "Update a category",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "path",
+            "description": "ID of the category to update",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Category updated successfully"
+          }
+        }
+      }
+    },
+    "/bikestores/categories/delete/{categoryId}": {
+      "delete": {
+        "summary": "Delete a category",
+        "parameters": [
+          {
+            "name": "categoryId",
+            "in": "path",
+            "description": "ID of the category to delete",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Category deleted successfully"
+          }
+        }
+      }
+    },
+    "/bikestores/employees": {
+      "get": {
+        "summary": "Retrieve the list of employees",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "post": {
+        "summary": "Add a new employee",
+        "responses": {
+          "201": {
+            "description": "Employee added successfully"
+          }
+        }
+      }
+    },
+    "/bikestores/employees/update/{employeeId}": {
+      "put": {
+        "summary": "Update an employee",
+        "parameters": [
+          {
+            "name": "employeeId",
+            "in": "path",
+            "description": "ID of the employee to update",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Employee updated successfully"
+          }
+        }
+      }
+    },
+    "/bikestores/employees/delete/{employeeId}": {
+      "delete": {
+        "summary": "Delete an employee",
+        "parameters": [
+          {
+            "name": "employeeId",
+            "in": "path",
+            "description": "ID of the employee to delete",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Employee deleted successfully"
+          }
+        }
+      }
+    },
+    "/bikestores/products": {
+      "get": {
+        "summary": "Retrieve the list of products",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new product",
+        "responses": {
+          "201": {
+            "description": "Product created successfully"
+          }
+        }
+      }
+    },
+    "/bikestores/products/{productId}": {
+      "get": {
+        "summary": "Get a product by ID",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "description": "ID of the product to get",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/bikestores/products/update/{productId}": {
+      "put": {
+        "summary": "Update a product",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "description": "ID of the product to update",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product updated successfully"
+          }
+        }
+      }
+    },
+    "/bikestores/products/delete/{productId}": {
+      "delete": {
+        "summary": "Delete a product",
+        "parameters": [
+          {
+            "name": "productId",
+            "in": "path",
+            "description": "ID of the product to delete",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Product deleted successfully"
+          }
+        }
+      }
+    },
+    "/bikestores/stocks/update/{stockId}": {
+      "put": {
+        "summary": "Update a stock",
+        "parameters": [
+          {
+            "name": "stockId",
+            "in": "path",
+            "description": "ID of the stock to update",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Stock updated successfully"
+          }
+        }
+      }
+    },
+    "/bikestores/stores/employees/{storeName}": {
+      "get": {
+        "summary": "Get employees by store name",
+        "parameters": [
+          {
+            "name": "storeName",
+            "in": "path",
+            "description": "Name of the store to get employees",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/bikestores/stores/update/{storeId}": {
+      "put": {
+        "summary": "Update a store",
+        "parameters": [
+          {
+            "name": "storeId",
+            "in": "path",
+            "description": "ID of the store to update",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Store updated successfully"
+          }
+        }
+      }
+    }
+  }
+}
