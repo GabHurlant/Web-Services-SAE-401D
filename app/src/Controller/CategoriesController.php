@@ -67,6 +67,12 @@ class CategoriesController
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['categoryName'])) {
 
+            //verification of the API key
+            if (!isset($_POST["API_KEY"]) || $_POST['API_KEY'] !== self::API_KEY) {
+                echo json_encode(["error" => "Invalid API Key"]);
+                return;
+            }
+
             $categoryName = $_POST['categoryName'];
 
             $category = new Categories();

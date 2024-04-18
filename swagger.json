@@ -2,10 +2,9 @@
   "openapi": "3.0.0",
   "info": {
     "title": "SAE 401: Bikestore API",
-    "description": "Here is the API I made for the SAE 401",
+    "description": "Here is the API I made for the SAE 401. You can find in this documentation every possible method you can use to interact with the API. The API is hosted on the server https://dev-lasne221.users.info.unicaen.fr. You can find the source code of the API on the GitHub repository https://github.com/GabHurlant/Web-Services-SAE-401D.git . For every request POST, PUT and DELETE, an API key is required in the body of the request. Many Parameters can be necessary for a request, please consult the code to which one. ",
     "version": "1.0.0"
   },
-  
   "servers": [
     {
       "url": "https://dev-lasne221.users.info.unicaen.fr",
@@ -15,6 +14,7 @@
   "paths": {
     "/bikestores/brands": {
       "get": {
+        "tags": ["Brands"],
         "summary": "Retrieve the list of brands",
         "responses": {
           "200": {
@@ -23,7 +23,13 @@
         }
       },
       "post": {
+        "tags": ["Brands"],
         "summary": "Create a new brand",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "responses": {
           "201": {
             "description": "Brand created successfully"
@@ -33,6 +39,7 @@
     },
     "/bikestores/brands/{brandName}": {
       "get": {
+        "tags": ["Brands"],
         "summary": "Find products by brand name",
         "parameters": [
           {
@@ -54,7 +61,13 @@
     },
     "/bikestores/brands/create": {
       "post": {
+        "tags": ["Brands"],
         "summary": "Create a new brand",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "responses": {
           "201": {
             "description": "Brand created successfully"
@@ -64,7 +77,13 @@
     },
     "/bikestores/brands/update/{brandId}": {
       "put": {
+        "tags": ["Brands"],
         "summary": "Update a brand",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "brandId",
@@ -85,7 +104,13 @@
     },
     "/bikestores/brands/delete/{brandId}": {
       "delete": {
+        "tags": ["Brands"],
         "summary": "Delete a brand",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "brandId",
@@ -106,6 +131,7 @@
     },
     "/bikestores/categories/{categoryId}": {
       "get": {
+        "tags": ["Categories"],
         "summary": "Get a category by ID",
         "parameters": [
           {
@@ -127,6 +153,7 @@
     },
     "/bikestores/categories": {
       "get": {
+        "tags": ["Categories"],
         "summary": "Retrieve the list of categories",
         "responses": {
           "200": {
@@ -135,6 +162,7 @@
         }
       },
       "post": {
+        "tags": ["Categories"],
         "summary": "Create a new category",
         "responses": {
           "201": {
@@ -145,7 +173,13 @@
     },
     "/bikestores/categories/create": {
       "post": {
+        "tags": ["Categories"],
         "summary": "Create a new category",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "responses": {
           "201": {
             "description": "Category created successfully"
@@ -155,7 +189,13 @@
     },
     "/bikestores/categories/update/{categoryId}": {
       "put": {
+        "tags": ["Categories"],
         "summary": "Update a category",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "categoryId",
@@ -176,7 +216,13 @@
     },
     "/bikestores/categories/delete/{categoryId}": {
       "delete": {
+        "tags": ["Categories"],
         "summary": "Delete a category",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "categoryId",
@@ -197,7 +243,13 @@
     },
     "/bikestores/employees": {
       "get": {
+        "tags": ["Employees"],
         "summary": "Retrieve the list of employees",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "responses": {
           "200": {
             "description": "Successful response"
@@ -205,7 +257,13 @@
         }
       },
       "post": {
+        "tags": ["Employees"],
         "summary": "Add a new employee",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "responses": {
           "201": {
             "description": "Employee added successfully"
@@ -215,7 +273,13 @@
     },
     "/bikestores/employees/update/{employeeId}": {
       "put": {
+        "tags": ["Employees"],
         "summary": "Update an employee",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "employeeId",
@@ -236,7 +300,13 @@
     },
     "/bikestores/employees/delete/{employeeId}": {
       "delete": {
+        "tags": ["Employees"],
         "summary": "Delete an employee",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "employeeId",
@@ -257,6 +327,7 @@
     },
     "/bikestores/products": {
       "get": {
+        "tags": ["Products"],
         "summary": "Retrieve the list of products",
         "responses": {
           "200": {
@@ -265,7 +336,13 @@
         }
       },
       "post": {
+        "tags": ["Products"],
         "summary": "Create a new product",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "responses": {
           "201": {
             "description": "Product created successfully"
@@ -275,6 +352,7 @@
     },
     "/bikestores/products/{productId}": {
       "get": {
+        "tags": ["Products"],
         "summary": "Get a product by ID",
         "parameters": [
           {
@@ -296,7 +374,13 @@
     },
     "/bikestores/products/update/{productId}": {
       "put": {
+        "tags": ["Products"],
         "summary": "Update a product",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "productId",
@@ -317,7 +401,13 @@
     },
     "/bikestores/products/delete/{productId}": {
       "delete": {
+        "tags": ["Products"],
         "summary": "Delete a product",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "productId",
@@ -338,7 +428,13 @@
     },
     "/bikestores/stocks/update/{stockId}": {
       "put": {
+        "tags": ["Stocks"],
         "summary": "Update a stock",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "stockId",
@@ -359,6 +455,7 @@
     },
     "/bikestores/stores/employees/{storeName}": {
       "get": {
+        "tags": ["Stores"],
         "summary": "Get employees by store name",
         "parameters": [
           {
@@ -380,7 +477,13 @@
     },
     "/bikestores/stores/update/{storeId}": {
       "put": {
+        "tags": ["Stores"],
         "summary": "Update a store",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
         "parameters": [
           {
             "name": "storeId",
@@ -397,6 +500,15 @@
             "description": "Store updated successfully"
           }
         }
+      }
+    }
+  },
+"components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "API_KEY"
       }
     }
   }
