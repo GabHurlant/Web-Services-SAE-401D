@@ -160,15 +160,6 @@
             "description": "Successful response"
           }
         }
-      },
-      "post": {
-        "tags": ["Categories"],
-        "summary": "Create a new category",
-        "responses": {
-          "201": {
-            "description": "Category created successfully"
-          }
-        }
       }
     },
     "/bikestores/categories/create": {
