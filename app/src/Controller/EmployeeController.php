@@ -7,19 +7,33 @@ use App\Entity\Employees;
 use App\Entity\Stores;
 use Repository\EmployeeRepository;
 
+/**
+ * Class EmployeeController
+ * @package App\Controller
+ */
 class EmployeeController
 {
+    /** @var \App\Repository\EmployeeRepository */
     private $employeeRepository;
+
+    /** @var EntityManager */
     private $entityManager;
 
     const API_KEY = "e8f1997c763";
 
+    /**
+     * EmployeeController constructor.
+     * @param EntityManager $entityManager
+     */
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
         $this->employeeRepository = $entityManager->getRepository(Employees::class);
     }
 
+    /**
+     * Retrieve all employees
+     */
     public function getAllEmployees()
     {
         $employees = $this->employeeRepository->findAll();
@@ -27,8 +41,9 @@ class EmployeeController
         echo json_encode($employees);
     }
 
-
-
+    /**
+     * Add a new employee
+     */
     public function addEmployee()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['employee_name']) && isset($_POST['employee_email']) && isset($_POST['employee_password']) && isset($_POST['employee_role']) && isset($_POST['store_id'])) {
@@ -44,7 +59,7 @@ class EmployeeController
             $employeePassword = $_POST['employee_password'];
             $employeeRole = $_POST['employee_role'];
 
-            // Récupérer l'instance de Stores correspondant à storeId
+            // Retrieve the Stores instance corresponding to storeId
             $store = $this->entityManager->getRepository(Stores::class)->find($storeId);
             if (!$store) {
                 echo json_encode(["error" => "Store not found"]);
@@ -52,7 +67,7 @@ class EmployeeController
             }
 
             $employee = new Employees();
-            $employee->setStore($store); // Passer l'instance de Stores à setStore()
+            $employee->setStore($store); // Pass the Stores instance to setStore()
             $employee->setEmployeeName($employeeName);
             $employee->setEmployeeEmail($employeeEmail);
             $employee->setEmployeePassword($employeePassword);
@@ -65,8 +80,11 @@ class EmployeeController
         }
     }
 
-
-
+    /**
+     * Update an employee
+     * @param array $params
+     * @return mixed
+     */
     public function updateEmployee($params)
     {
         $employeeId = $params['employeeId'];
@@ -119,8 +137,10 @@ class EmployeeController
         }
     }
 
-
-
+    /**
+     * Delete an employee
+     * @param array $params
+     */
     public function deleteEmployee($params)
     {
         $employeeId = $params['employeeId'];

@@ -6,28 +6,45 @@ use Doctrine\ORM\EntityManager;
 use App\Entity\Categories;
 use Repository\CategoryRepository;
 
+/**
+ * Class CategoriesController
+ * @package App\Controller
+ */
 class CategoriesController
 {
+    /** @var EntityManager */
     private $entityManager;
+
+    /** @var \App\Repository\CategoryRepository */
     private $categoryRepository;
 
     const API_KEY = "e8f1997c763";
 
+    /**
+     * CategoriesController constructor.
+     * @param EntityManager $entityManager
+     */
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
         $this->categoryRepository = $entityManager->getRepository(Categories::class);
     }
 
+    /**
+     * Get a category by ID
+     * @param array $categoryId
+     */
     public function getCategory($categoryId)
     {
-
         $categoryId = $categoryId['categoryId'];
         $category = $this->categoryRepository->find($categoryId);
         header('Content-Type: application/json');
         echo json_encode($category);
     }
 
+    /**
+     * Get all categories
+     */
     public function getAllCategories()
     {
         $categories = $this->categoryRepository->findAll();
@@ -35,39 +52,15 @@ class CategoriesController
         echo json_encode($categories);
     }
 
-
-    // public function findProductsByCategoryName($categoryName)
-    // {
-    //     $categoryName = urldecode($categoryName);
-    //     $category = $this->categoryRepository->findOneBy(['category_name' => $categoryName]);
-    //     if ($category) {
-    //         $products = $category->getProducts()->toArray();
-    //         $productData = [];
-    //         foreach ($products as $product) {
-    //             $productData[] = [
-    //                 'id' => $product->getProductId(),
-    //                 'name' => $product->getProductName(),
-    //                 'brand' => $product->getBrand()->getBrandName(),
-    //                 'category' => $product->getCategory()->getCategoryName(),
-    //                 'year' => $product->getModelYear(),
-    //                 'price' => $product->getListPrice()
-    //             ];
-    //         }
-    //         header('Content-Type: application/json');
-    //         echo json_encode($productData);
-    //     } else {
-    //         header('Content-Type: application/json');
-    //         echo json_encode(["error" => "Category not found"]);
-    //     }
-    // }
-
-
-
+    /**
+     * Create a new category
+     * @param string $categoryName
+     */
     public function createCategory($categoryName)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['categoryName'])) {
 
-            //verification of the API key
+            // Verification of the API key
             if (!isset($_POST["API_KEY"]) || $_POST['API_KEY'] !== self::API_KEY) {
                 echo json_encode(["error" => "Invalid API Key"]);
                 return;
@@ -81,16 +74,17 @@ class CategoriesController
             $this->entityManager->persist($category);
             $this->entityManager->flush();
 
-
             echo json_encode(["success" => "Category created"]);
         } else {
-
             echo json_encode(["error" => "Category not created"]);
         }
     }
 
-
-
+    /**
+     * Update a category
+     * @param array $params
+     * @return mixed
+     */
     public function updateCategory($params)
     {
         $categoryId = $params['categoryId'];
@@ -121,8 +115,10 @@ class CategoriesController
         }
     }
 
-
-
+    /**
+     * Delete a category
+     * @param array $params
+     */
     public function deleteCategory($params)
     {
         $categoryId = $params['categoryId'];

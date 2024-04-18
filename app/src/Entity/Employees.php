@@ -1,8 +1,14 @@
 <?php
 
-// src/Entity/Employees.php
+/**
+ * Namespace declaration
+ */
 
 namespace App\Entity;
+
+/**
+ * Importing necessary Doctrine classes and interfaces
+ */
 
 use Doctrine\ORM\Mapping as ORM;
 use JsonSerializable;
@@ -10,66 +16,76 @@ use JsonSerializable;
 /**
  * @ORM\Entity(repositoryClass="App\Repository\EmployeeRepository")
  * @ORM\Table(name="Employees")
+ *
+ * Class Employees
+ *
+ * Represents an employee in the application.
  */
-
 class Employees implements JsonSerializable
 {
-
-    //déclaration des attributs & annotation doctrines
-
     /**
      * @var int
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue
+     *
+     * The unique identifier of the employee.
      */
-
     private int $employee_id;
 
     /**
      * @ORM\ManyToOne(targetEntity=Stores::class, inversedBy="employees")
      * @ORM\JoinColumn(name="store_id", referencedColumnName="store_id")
+     *
+     * The store where the employee works.
      */
-
     private $store;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     *
+     * The name of the employee.
      */
-
     private string $employee_name;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     *
+     * The email of the employee.
      */
-
     private string $employee_email;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     *
+     * The password of the employee.
      */
-
     private string $employee_password;
 
     /**
      * @var string
      * @ORM\Column(type="string")
+     *
+     * The role of the employee.
      */
-
     private string $employee_role;
 
+    /**
+     * Returns a string representation of the employee.
+     *
+     * @return string
+     */
     public function __toString()
     {
         return "Employé :{$this->employee_id}, {$this->store}, {$this->employee_name}, {$this->employee_email}, {$this->employee_password}, {$this->employee_role}";
     }
 
-    //getters & setters
-
     /**
-     * get employee_id
+     * Returns the employee's ID.
+     *
      * @return int
      */
     public function getEmployeeId(): int
@@ -78,7 +94,8 @@ class Employees implements JsonSerializable
     }
 
     /**
-     * get store_id
+     * Returns the ID of the store where the employee works.
+     *
      * @return int
      */
     public function getStoreId(): int
@@ -87,7 +104,8 @@ class Employees implements JsonSerializable
     }
 
     /**
-     * get employee_name
+     * Returns the employee's name.
+     *
      * @return string
      */
     public function getEmployeeName(): string
@@ -96,7 +114,8 @@ class Employees implements JsonSerializable
     }
 
     /**
-     * get employee_email
+     * Returns the employee's email.
+     *
      * @return string
      */
     public function getEmployeeEmail(): string
@@ -105,7 +124,8 @@ class Employees implements JsonSerializable
     }
 
     /**
-     * get employee_password
+     * Returns the employee's password.
+     *
      * @return string
      */
     public function getEmployeePassword(): string
@@ -114,7 +134,8 @@ class Employees implements JsonSerializable
     }
 
     /**
-     * get employee_role
+     * Returns the employee's role.
+     *
      * @return string
      */
     public function getEmployeeRole(): string
@@ -122,9 +143,9 @@ class Employees implements JsonSerializable
         return $this->employee_role;
     }
 
-
     /**
-     * set employee_name
+     * Sets the employee's name.
+     *
      * @param string $employee_name
      * @return Employees
      */
@@ -135,7 +156,8 @@ class Employees implements JsonSerializable
     }
 
     /**
-     * set store_id
+     * Sets the store where the employee works.
+     *
      * @param Stores $store
      * @return Employees
      */
@@ -146,7 +168,8 @@ class Employees implements JsonSerializable
     }
 
     /**
-     * set employee_email
+     * Sets the employee's email.
+     *
      * @param string $employee_email
      * @return Employees
      */
@@ -157,7 +180,8 @@ class Employees implements JsonSerializable
     }
 
     /**
-     * set employee_password
+     * Sets the employee's password.
+     *
      * @param string $employee_password
      * @return Employees
      */
@@ -168,7 +192,8 @@ class Employees implements JsonSerializable
     }
 
     /**
-     * set employee_role
+     * Sets the employee's role.
+     *
      * @param string $employee_role
      * @return Employees
      */
@@ -178,6 +203,11 @@ class Employees implements JsonSerializable
         return $this;
     }
 
+    /**
+     * Returns a JSON representation of the employee.
+     *
+     * @return array
+     */
     public function jsonSerialize()
     {
         return [

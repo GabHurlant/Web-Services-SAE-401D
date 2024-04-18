@@ -8,20 +8,33 @@ use App\Entity\Brands;
 use App\Entity\Categories;
 use App\Repository\ProductRepository;
 
+/**
+ * Class ProductController
+ * @package App\Controller
+ */
 class ProductController
 {
+    /** @var ProductRepository */
     private $productRepository;
 
+    /** @var EntityManager */
     private $entityManager;
 
     const API_KEY = 'e8f1997c763';
 
+    /**
+     * ProductController constructor.
+     * @param EntityManager $entityManager
+     */
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
         $this->productRepository = $entityManager->getRepository(Products::class);
     }
 
+    /**
+     * Retrieve all products
+     */
     public function getAllProducts()
     {
         $products = $this->productRepository->findAll();
@@ -29,6 +42,10 @@ class ProductController
         echo json_encode($products);
     }
 
+    /**
+     * Retrieve a product by ID
+     * @param array $productId
+     */
     public function getProduct($productId)
     {
         $productId = $productId['productId'];
@@ -37,7 +54,9 @@ class ProductController
         echo json_encode($product);
     }
 
-
+    /**
+     * Create a new product
+     */
     public function createProduct()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['productName']) && isset($_POST['brandId']) && isset($_POST['categoryId']) && isset($_POST['modelYear']) && isset($_POST['productPrice'])) {
@@ -73,6 +92,11 @@ class ProductController
         }
     }
 
+    /**
+     * Update a product
+     * @param array $params
+     * @return mixed
+     */
     public function updateProduct($params)
     {
         $productId = $params['productId'];
@@ -130,6 +154,10 @@ class ProductController
         }
     }
 
+    /**
+     * Delete a product
+     * @param array $params
+     */
     public function deleteProduct($params)
     {
         $productId = $params['productId'];
@@ -156,5 +184,6 @@ class ProductController
             echo json_encode(["error" => "invalid request"]);
             return;
         }
+        https: //chat.openai.com/c/2ef03c5c-60b7-40b2-b50c-adcdd8bf9f18
     }
 }
