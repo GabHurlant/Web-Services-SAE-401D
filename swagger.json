@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "SAE 401: Bikestore API",
-    "description": "Here is the API I made for the SAE 401. You can find in this documentation every possible method you can use to interact with the API. The API is hosted on the server https://dev-lasne221.users.info.unicaen.fr. You can find the source code of the API on the GitHub repository https://github.com/GabHurlant/Web-Services-SAE-401D.git . For every request POST, PUT and DELETE, an API key is required in the body of the request. Many Parameters can be necessary for a request, please consult the code to which one. ",
+    "description": "Here is the API I made for the SAE 401. You can find in this documentation every possible method you can use to interact with the API. The API is hosted on the server https://dev-lasne221.users.info.unicaen.fr. You can find the source code of the API on the GitHub repository https://github.com/GabHurlant/Web-Services-SAE-401D.git . For every request POST, PUT and DELETE, an API key is required in the body of the request. Many Parameters can be necessary for a request, please consult the code to know which one. ",
     "version": "1.0.0"
   },
   "servers": [
