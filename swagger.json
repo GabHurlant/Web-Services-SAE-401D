@@ -21,20 +21,6 @@
             "description": "Successful response"
           }
         }
-      },
-      "post": {
-        "tags": ["Brands"],
-        "summary": "Create a new brand",
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Brand created successfully"
-          }
-        }
       }
     },
     "/bikestores/brands/{brandName}": {
@@ -325,20 +311,6 @@
             "description": "Successful response"
           }
         }
-      },
-      "post": {
-        "tags": ["Products"],
-        "summary": "Create a new product",
-        "security": [
-          {
-            "ApiKeyAuth": []
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Product created successfully"
-          }
-        }
       }
     },
     "/bikestores/products/{productId}": {
@@ -359,6 +331,22 @@
         "responses": {
           "200": {
             "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/bikestores/products/create": {
+      "post": {
+        "tags": ["Products"],
+        "summary": "Create a new product",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Product created successfully"
           }
         }
       }
