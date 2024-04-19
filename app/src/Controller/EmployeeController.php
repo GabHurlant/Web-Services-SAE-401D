@@ -184,15 +184,18 @@ class EmployeeController
                 $employeeName = $employee->getEmployeeName();
                 $employeeEmail = $employee->getEmployeeEmail();
                 $employeeRole = $employee->getEmployeeRole();
+                $storeId = $employee->getStoreId();
 
                 header('Content-Type: application/json');
                 echo json_encode([
                     'success' => 'Authenticated',
                     'employeeName' => $employeeName,
                     'employeeEmail' => $employeeEmail,
-                    'employeeRole' => $employeeRole
+                    'employeeRole' => $employeeRole,
+                    'storeId' => $storeId
                 ]);
             } else {
+                header('Content-Type: application/json');
                 echo json_encode(['error' => 'Email or password is incorrect']);
             }
         } else {
