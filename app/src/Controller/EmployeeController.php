@@ -168,4 +168,35 @@ class EmployeeController
             return;
         }
     }
+
+    /**
+     * Authenticate an employee
+     */
+    public function auth()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['employee_email']) && isset($_POST['employee_password'])) {
+            $employeeEmail = $_POST['employee_email'];
+            $employeePassword = $_POST['employee_password'];
+
+            $employee = $this->employeeRepository->findOneBy(['employee_email' => $employeeEmail, 'employee_password' => $employeePassword]);
+
+            if ($employee) {
+                $employeeName = $employee->getEmployeeName();
+                $employeeEmail = $employee->getEmployeeEmail();
+                $employeeRole = $employee->getEmployeeRole();
+
+                header('Content-Type: application/json');
+                echo json_encode([
+                    'success' => 'Authenticated',
+                    'employeeName' => $employeeName,
+                    'employeeEmail' => $employeeEmail,
+                    'employeeRole' => $employeeRole
+                ]);
+            } else {
+                echo json_encode(['error' => 'Email or password is incorrect']);
+            }
+        } else {
+            echo json_encode(["error" => "all fields are required"]);
+        }
+    }
 }

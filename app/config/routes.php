@@ -102,6 +102,12 @@ return [
         'action' => 'addEmployee'
     ],
     [
+        'method' => 'POST',
+        'path' => '/bikestores/employees/auth',
+        'controller' => $employeeController,
+        'action' => 'auth'
+    ],
+    [
         'method' => 'PUT',
         'path' => '/bikestores/employees/update/(?P<employeeId>\d+)',
         'controller' => $employeeController,

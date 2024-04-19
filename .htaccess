@@ -16,6 +16,9 @@ RewriteRule ^brands/([a-zA-Z0-9_-]+)$ index.php?brandName=$1 [QSA,L]
 # product with category name
 RewriteRule ^categories/([a-zA-Z0-9_-]+)$ index.php?categoryName=$1 [QSA,L]
 
+#authentification
+RewriteRule ^employees/auth$ index.php [L,QSA]
+
 # create
 RewriteRule ^(brands|stores|products|employees|categories|stocks)/create$ index.php [L]
 
